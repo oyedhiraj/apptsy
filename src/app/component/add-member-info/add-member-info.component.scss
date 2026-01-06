@@ -1,0 +1,64 @@
+ion-header {
+  --background: var(--ion-color-primary);
+  color: #fff;
+}
+
+ion-content {
+  --background: linear-gradient(135deg, #e0f7fa, #f1f8e9);
+}
+
+.form-card {
+  --border-radius: 20px;
+  --box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+  margin-top: 20px;
+  padding-bottom: 10px;
+}
+
+.title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: bold;
+  font-size: 1.4rem;
+  color: #1e88e5;
+}
+
+ion-item {
+  margin-top: 12px;
+  --background: #fff;
+  border-radius: 10px;
+  transition: all 0.25s ease;
+}
+
+/* 👇 Smooth focus animation */
+.animated-input:focus-within {
+  --highlight-background: #e3f2fd;
+  transform: scale(1.02);
+  box-shadow: 0 4px 12px rgba(30, 136, 229, 0.25);
+}
+
+ion-label {
+  transition: all 0.3s ease;
+}
+
+ion-icon {
+  font-size: 1.4rem;
+  transition: color 0.3s ease;
+}
+
+/* Icon highlight on focus */
+.animated-input:focus-within ion-icon {
+  color: var(--ion-color-primary);
+}
+
+ion-button.submit-btn {
+  --border-radius: 12px;
+  font-weight: 600;
+  font-size: 1rem;
+  box-shadow: 0 4px 10px rgba(30, 136, 229, 0.4);
+  transition: all 0.3s ease;
+}
+
+ion-button.submit-btn:hover {
+  transform: translateY(-2px);
+}

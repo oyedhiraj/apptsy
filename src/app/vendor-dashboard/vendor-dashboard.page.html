@@ -1,0 +1,89 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>Vendor Dashboard</ion-title>
+  </ion-toolbar>
+
+  <!-- STATUS FILTER -->
+  <ion-toolbar>
+    <ion-segment [(ngModel)]="selectedStatus">
+      <ion-segment-button value="all">All</ion-segment-button>
+      <ion-segment-button value="pending">Pending</ion-segment-button>
+      <ion-segment-button value="confirmed">Confirmed</ion-segment-button>
+      <ion-segment-button value="cancelled">Cancelled</ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content fullscreen class="vendor-dashboard">
+
+  <!-- PULL TO REFRESH -->
+  <ion-refresher slot="fixed" (ionRefresh)="refreshBookings($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+  <!-- BOOKINGS -->
+  <ion-card *ngFor="let b of filteredBookings; let i = index"
+            class="booking-card"
+            [ngClass]="b.status"
+            [style.animation-delay]="(i*0.08)+'s'">
+
+    <!-- CARD HEADER -->
+    <div class="card-header">
+      <div class="customer-name">{{ b.customerName }}</div>
+      <div class="badge-wrapper">
+        <ion-badge [color]="getStatusColor(b.status)">
+          {{ b.status | titlecase }}
+        </ion-badge>
+      </div>
+    </div>
+
+    <!-- CARD BODY -->
+    <div class="card-body">
+      <div class="row">
+        <ion-icon name="briefcase-outline"></ion-icon>
+        <span><strong>Service:</strong> {{ b.serviceType }}</span>
+      </div>
+      <div class="row">
+        <ion-icon name="call-outline"></ion-icon>
+        <span><strong>Phone:</strong> {{ b.customerPhone }}</span>
+      </div>
+      <div class="row">
+        <ion-icon name="location-outline"></ion-icon>
+        <span><strong>Location:</strong> {{ b.customerLocation || 'N/A' }}</span>
+      </div>
+      <div class="row">
+        <ion-icon name="calendar-outline"></ion-icon>
+        <span><strong>Booking Date:</strong> {{ b.bookingDate | date:'short' }}</span>
+      </div>
+    </div>
+
+    <!-- CARD ACTIONS -->
+    <div class="card-actions">
+      <ion-button expand="block"
+                  *ngIf="b.status === 'pending'"
+                  (click)="confirmBooking(b._id)">
+        Confirm Booking
+      </ion-button>
+
+      <ion-button expand="block"
+                  *ngIf="b.status === 'confirmed'"
+                  (click)="callCustomer(b.customerPhone)">
+        Call Customer
+      </ion-button>
+
+      <ion-button expand="block"
+                  *ngIf="b.status === 'cancelled'"
+                  color="medium" disabled>
+        Cancelled
+      </ion-button>
+    </div>
+  </ion-card>
+
+  <!-- EMPTY STATE -->
+  <div class="empty-state" *ngIf="!isLoading && filteredBookings.length === 0">
+    <ion-icon name="clipboard-outline"></ion-icon>
+    <h3>No bookings found</h3>
+    <p>Bookings will appear here when available</p>
+  </div>
+
+</ion-content>

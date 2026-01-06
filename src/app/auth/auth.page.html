@@ -1,0 +1,49 @@
+<ion-content [ngClass]="roleClass" fullscreen>
+
+  <div class="login-wrapper">
+
+    <div class="login-card">
+      <div class="login-header">
+        <ion-icon [name]="roleIcon"></ion-icon>
+        <h2>{{ role | titlecase }} Login</h2>
+        <p *ngIf="service">Booking: {{ service }}</p>
+      </div>
+
+      <ion-list lines="full" class="form-area">
+        <ion-item>
+          <ion-icon name="mail-outline" slot="start"></ion-icon>
+          <ion-label position="floating">Email</ion-label>
+          <ion-input [(ngModel)]="email" type="email"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-icon name="lock-closed-outline" slot="start"></ion-icon>
+          <ion-label position="floating">Password</ion-label>
+          <ion-input [(ngModel)]="password" type="password"></ion-input>
+        </ion-item>
+      </ion-list>
+
+      <ion-button expand="block" class="login-btn" (click)="login()">
+        Login
+      </ion-button>
+      <div class="login-links">
+        <ion-text>
+          New user?
+          <span class="link" (click)="goToRegister()">Register here</span>
+        </ion-text>
+      
+        <ion-text class="home-link" (click)="backToHome()">
+          ← Back to Home
+        </ion-text>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Animated particles / shapes -->
+  <div class="animated-bg">
+    <div *ngIf="role==='vendor'" class="vendor-shape"></div>
+    <div *ngIf="role==='customer'" class="customer-shape"></div>
+  </div>
+
+</ion-content>

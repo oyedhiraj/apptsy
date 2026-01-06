@@ -1,0 +1,100 @@
+.subscription-wrapper {
+  padding: 20px;
+  background: #f0f4f8;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.title {
+  font-size: 26px;
+  font-weight: 700;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.plan-list {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  width: 100%;
+  max-width: 400px;
+  margin-bottom: 20px;
+}
+
+.plan-card {
+  border-radius: 18px;
+  padding: 20px;
+  color: white;
+  cursor: pointer;
+  transition: transform 0.3s, box-shadow 0.3s;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+  opacity: 0.9;
+}
+
+.plan-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 25px rgba(0,0,0,0.35);
+  opacity: 1;
+}
+
+.plan-card.selected {
+  border: 3px solid #fff;
+  transform: translateY(-5px);
+  box-shadow: 0 20px 35px rgba(0,0,0,0.45);
+  opacity: 1;
+}
+
+.card-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.plan-icon {
+  font-size: 36px;
+}
+
+h3 {
+  font-size: 20px;
+  margin: 0;
+}
+
+.price {
+  font-size: 16px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+ul {
+  list-style: none;
+  padding-left: 0;
+  margin: 0;
+}
+
+li {
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 5px;
+}
+
+li ion-icon {
+  font-size: 16px;
+}
+
+.pay-btn {
+  border-radius: 12px;
+  font-weight: bold;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: #fff;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.pay-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}

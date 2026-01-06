@@ -1,0 +1,43 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title slot="start">Home Services</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content fullscreen>
+  <div class="banner">
+    <h2>Welcome to Smart Services</h2>
+    <p>Book trusted professionals near you</p>
+  </div>
+
+  <ion-grid class="service-grid">
+    <ion-row>
+      <ion-col size="6" *ngFor="let service of services">
+        <div class="service-card" [style.background]="service.color" (click)="openPopup(service)">
+          <ion-icon [name]="service.icon"></ion-icon>
+          <h3>{{ service.name }}</h3>
+        </div>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <ion-modal [isOpen]="showPopup" (ionModalDidDismiss)="closePopup()">
+    <ng-template>
+      <div class="popup-card">
+        <ion-icon [name]="selectedService?.icon" class="popup-icon"></ion-icon>
+        <h2>{{ selectedService?.name }}</h2>
+        <p>Please select your login type to continue.</p>
+
+        <ion-button color="tertiary" expand="block" (click)="loginAs('Vendor')">
+          Login as Vendor
+        </ion-button>
+
+        <ion-button color="success" expand="block" (click)="loginAs('Customer')">
+          Login as Customer
+        </ion-button>
+
+        <ion-button fill="clear" color="medium" (click)="closePopup()">Close</ion-button>
+      </div>
+    </ng-template>
+  </ion-modal>
+</ion-content>

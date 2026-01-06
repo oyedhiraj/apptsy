@@ -1,0 +1,107 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>Member Information</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="isFilterOpen = true">
+        <ion-icon name="filter-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+
+  <ion-toolbar>
+    <ion-searchbar
+      [(ngModel)]="searchText"
+      (ionInput)="applyFilter()"
+      placeholder="Search by name or service">
+    </ion-searchbar>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="member-page">
+
+  <div class="member-list">
+    <ion-card *ngFor="let member of filteredMembers" class="member-card">
+      <div class="member-top">
+        <ion-avatar class="avatar">
+          <img [src]="member.gender === 'male' ? 'assets/male-avatar.png' : 'assets/female-avatar.png'" />
+        </ion-avatar>
+
+        <div class="member-details">
+          <h2>{{ member.name }}</h2>
+          <p>{{ member.age }} years old</p>
+          <p>
+            <ion-icon [name]="getServiceIcon(member.service)"></ion-icon>
+            {{ member.service }}
+          </p>
+          <p>
+            <ion-icon name="location-outline"></ion-icon>
+            {{ member.location }}
+          </p>
+        </div>
+
+        <ion-badge [color]="member.gender === 'male' ? 'primary' : 'danger'" class="gender-badge">
+          <ion-icon [name]="member.gender === 'male' ? 'man-outline' : 'woman-outline'"></ion-icon>
+        </ion-badge>
+      </div>
+
+      <div class="member-actions">
+        <ion-button expand="block" color="secondary" (click)="provideService(member)">
+          <ion-icon slot="start" name="hand-right-outline"></ion-icon>
+          Provide Service
+        </ion-button>
+      </div>
+    </ion-card>
+  </div>
+
+ <!-- 🔽 BOTTOM SHEET FILTER WITH CLOSE ICON -->
+<div class="filter-sheet" [class.open]="isFilterOpen">
+  <ion-card>
+    <!-- CLOSE ICON -->
+    <ion-card-header>
+      <div class="filter-header">
+        <h2>FILTER</h2>
+        <ion-button class="close-icon" fill="clear" (click)="isFilterOpen = false">
+          <ion-icon name="close-outline" size="large"></ion-icon>
+        </ion-button>
+      </div>
+    </ion-card-header>
+
+    <ion-card-content>
+      <!-- LOCATION CHIPS -->
+      <h3>Location</h3>
+      <div class="chip-group">
+        <ion-chip *ngFor="let loc of locations" 
+                  [color]="selectedLocations.includes(loc) ? 'primary' : 'medium'" 
+                  (click)="toggleSelection('location', loc)">
+          {{ loc }}
+        </ion-chip>
+      </div>
+
+      <!-- SERVICE CHIPS -->
+      <h3>Service</h3>
+      <div class="chip-group">
+        <ion-chip *ngFor="let svc of services" 
+                  [color]="selectedServices.includes(svc) ? 'primary' : 'medium'" 
+                  (click)="toggleSelection('service', svc)">
+          {{ svc }}
+        </ion-chip>
+      </div>
+
+      <!-- GENDER CHIPS -->
+      <h3>Gender</h3>
+      <div class="chip-group">
+        <ion-chip *ngFor="let g of genders" 
+                  [color]="selectedGenders.includes(g) ? 'primary' : 'medium'" 
+                  (click)="toggleSelection('gender', g)">
+          {{ g | titlecase }}
+        </ion-chip>
+      </div>
+
+      <ion-button expand="block" color="primary" (click)="applyFilter()">Apply Filter</ion-button>
+      <ion-button expand="block" color="medium" fill="outline" (click)="resetFilter()">Reset Filter</ion-button>
+
+    </ion-card-content>
+  </ion-card>
+</div>
+
+</ion-content>

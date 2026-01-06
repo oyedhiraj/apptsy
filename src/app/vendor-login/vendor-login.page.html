@@ -1,0 +1,57 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title class="ion-text-center">Vendor Login</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="login-page">
+
+  <div class="login-wrapper">
+
+    <!-- Header with icon -->
+    <div class="login-header">
+      <ion-icon name="business-outline" class="login-icon"></ion-icon>
+      <h2>Welcome Vendor</h2>
+      <p>Login to manage your <strong>{{ serviceName }}</strong> account</p>
+    </div>
+
+    <!-- Form -->
+    <ion-list lines="none" class="login-form">
+
+      <ion-item class="input-item">
+        <ion-icon name="mail-outline" slot="start"></ion-icon>
+        <ion-input 
+          type="email" 
+          placeholder="Enter your email" 
+          [(ngModel)]="user.email"
+          class="input-field">
+        </ion-input>
+      </ion-item>
+
+      <ion-item class="input-item">
+        <ion-icon name="lock-closed-outline" slot="start"></ion-icon>
+        <ion-input 
+          type="password" 
+          placeholder="Enter your password" 
+          [(ngModel)]="user.password"
+          class="input-field">
+        </ion-input>
+      </ion-item>
+
+    </ion-list>
+
+    <!-- Buttons -->
+    <ion-button expand="block" class="login-btn" (click)="login()">
+      <ion-icon slot="start" name="log-in-outline"></ion-icon>
+      Login
+    </ion-button>
+
+    <ion-button expand="block" fill="outline" class="register-btn" (click)="goToRegister()">
+      <ion-icon slot="start" name="person-add-outline"></ion-icon>
+      Register
+    </ion-button>
+
+    <ion-button expand="block" fill="clear" class="back-btn" (click)="backtohome()">
+      <ion-icon slot="start" name="arrow-back-outline"></ion-icon>
+      Back to Home
+    </ion-button>

@@ -1,0 +1,135 @@
+/* Make ion-content a flex container */
+.register-bg {
+  --background: linear-gradient(135deg, #3659dd 0%, #85acf2 100%);
+  display: flex;
+  justify-content: center; /* horizontal center */
+  align-items: center;     /* vertical center */
+  height: 100%;
+  width: 100%;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+/* Card */
+.register-card {
+  width: 100%;
+  // max-width: 400px;
+  background: #fff;
+  border-radius: 25px;
+  padding: 30px 25px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Profile Section */
+.profile-section {
+  text-align: center;
+  margin-bottom: 25px;
+  width: 100%;
+}
+
+.profile-pic {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #1258d6 0%, #d513d1 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  cursor: pointer;
+  margin: 0 auto;
+  transition: transform 0.3s ease;
+}
+
+.profile-pic:hover {
+  transform: scale(1.1);
+}
+
+.profile-pic img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.upload-text {
+  margin-top: 10px;
+  font-size: 14px;
+  color: #555;
+  text-align: center;
+}
+
+/* Form Items */
+.form-area {
+  width: 100%;
+}
+
+.form-area ion-item {
+  margin-bottom: 12px;
+  --background: #f8f8f8;
+  border-radius: 12px;
+}
+
+/* Aadhaar Upload */
+.aadhaar-box {
+  display: flex;
+  align-items: center;
+  justify-content: center; /* center icon & text */
+  padding: 15px;
+  margin: 15px 0;
+  border: 2px dashed #1849a2;
+  border-radius: 15px;
+  cursor: pointer;
+  color: #124cb3;
+  font-weight: 500;
+  background: #dae2f0;
+  transition: all 0.3s ease;
+  text-align: center;
+}
+
+.aadhaar-box:hover {
+  background: #ffe6f0;
+  transform: scale(1.02);
+}
+
+.aadhaar-box ion-icon {
+  margin-right: 10px;
+  font-size: 28px;
+}
+
+/* Register Button */
+.register-btn {
+  margin-top: 20px;
+  width: 100%;
+  --background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  --border-radius: 15px;
+  font-weight: bold;
+  color: #fff;
+  transition: transform 0.3s ease;
+}
+
+.register-btn:hover {
+  transform: scale(1.03);
+}
+
+/* Login Message */
+.login-msg {
+  text-align: center;
+  margin-top: 15px;
+  font-size: 14px;
+  color: #555;
+}
+
+.login-msg a {
+  color: #764ba2;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-20px);}
+  to { opacity: 1; transform: translateY(0);}
+}

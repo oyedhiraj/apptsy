@@ -1,0 +1,85 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>Add Member Information</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+
+  <ion-card class="form-card">
+    <ion-card-header>
+      <ion-card-title class="title">
+        <ion-icon name="person-add-outline"></ion-icon>
+        Member Details
+      </ion-card-title>
+      <ion-card-subtitle>Enter all required information below</ion-card-subtitle>
+    </ion-card-header>
+
+    <ion-card-content>
+      <form [formGroup]="memberForm" (ngSubmit)="submitForm()">
+
+        <!-- Full Name -->
+        <ion-item lines="full" class="animated-input">
+          <ion-icon slot="start" name="person-outline" color="primary"></ion-icon>
+          <ion-label position="floating">Full Name</ion-label>
+          <ion-input formControlName="name"></ion-input>
+        </ion-item>
+        <ion-text color="danger" *ngIf="isSubmitted && memberForm.get('name')?.invalid">
+          Name is required (min 2 characters)
+        </ion-text>
+
+        <!-- Age -->
+        <ion-item lines="full" class="animated-input">
+          <ion-icon slot="start" name="hourglass-outline" color="tertiary"></ion-icon>
+          <ion-label position="floating">Age</ion-label>
+          <ion-input type="number" formControlName="age"></ion-input>
+        </ion-item>
+        <ion-text color="danger" *ngIf="isSubmitted && memberForm.get('age')?.invalid">
+          Please enter a valid age (1–120)
+        </ion-text>
+
+        <!-- Phone Number -->
+        <ion-item lines="full" class="animated-input">
+          <ion-icon slot="start" name="call-outline" color="success"></ion-icon>
+          <ion-label position="floating">Phone Number</ion-label>
+          <ion-input type="tel" maxlength="10" formControlName="number"></ion-input>
+        </ion-item>
+        <ion-text color="danger" *ngIf="isSubmitted && memberForm.get('number')?.invalid">
+          Enter a valid 10-digit phone number
+        </ion-text>
+
+        <!-- Address -->
+        <ion-item lines="full" class="animated-input">
+          <ion-icon slot="start" name="location-outline" color="warning"></ion-icon>
+          <ion-label position="floating">Address</ion-label>
+          <ion-textarea autoGrow="true" formControlName="address"></ion-textarea>
+        </ion-item>
+        <ion-text color="danger" *ngIf="isSubmitted && memberForm.get('address')?.invalid">
+          Address is required
+        </ion-text>
+
+        <!-- Service Dropdown -->
+        <ion-item lines="full" class="animated-input">
+          <ion-icon slot="start" name="construct-outline" color="medium"></ion-icon>
+          <ion-label>Service</ion-label>
+          <ion-select formControlName="service" placeholder="Select service">
+            <ion-select-option *ngFor="let s of services" [value]="s">
+              {{ s }}
+            </ion-select-option>
+          </ion-select>
+        </ion-item>
+        <ion-text color="danger" *ngIf="isSubmitted && memberForm.get('service')?.invalid">
+          Service is required
+        </ion-text>
+
+        <!-- Submit Button -->
+        <ion-button expand="block" color="primary" type="submit" class="submit-btn ion-margin-top">
+          <ion-icon slot="start" name="checkmark-circle-outline"></ion-icon>
+          Submit Information
+        </ion-button>
+
+      </form>
+    </ion-card-content>
+  </ion-card>
+
+</ion-content>

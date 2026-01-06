@@ -1,0 +1,30 @@
+<div class="subscription-wrapper">
+
+  <h2 class="title">Choose Your Plan</h2>
+
+  <div class="plan-list">
+    <div class="plan-card" *ngFor="let plan of plans" 
+         [class.selected]="selectedPlan === plan"
+         (click)="selectPlan(plan)"
+         [style.background]="
+           'linear-gradient(135deg, ' + plan.colorStart + ', ' + plan.colorEnd + ')'
+         ">
+      <div class="card-header">
+        <ion-icon [name]="plan.icon" class="plan-icon"></ion-icon>
+        <h3>{{ plan.name }}</h3>
+      </div>
+      <p class="price">₹{{ plan.price }}/mo</p>
+      <ul>
+        <li *ngFor="let feature of plan.features">
+          <ion-icon name="checkmark-circle-outline"></ion-icon> {{ feature }}
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <ion-button expand="block" class="pay-btn" (click)="payNow()">
+    <ion-icon slot="start" name="card-outline"></ion-icon>
+    Pay Now
+  </ion-button>
+
+</div>

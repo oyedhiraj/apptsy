@@ -1,0 +1,114 @@
+<ion-header translucent="true">
+  <ion-toolbar>
+    <ion-title class="ion-text-center">Create Account</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="register-bg">
+
+  <div class="register-card" fullscreen>
+
+    <!-- Profile Image Upload Box -->
+    <div class="profile-section">
+      <div class="profile-pic" (click)="profileInput.click()">
+        <img *ngIf="profilePreview; else placeholder" [src]="profilePreview">
+        <ng-template #placeholder>
+          <ion-icon name="camera-outline"></ion-icon>
+        </ng-template>
+      </div>
+      <input hidden type="file" accept="image/*" #profileInput (change)="onProfileSelect($event)">
+      <p class="upload-text">Tap to upload profile photo</p>
+    </div>
+
+    <ion-list lines="full" class="form-area">
+
+      <!-- Full Name -->
+      <ion-item>
+        <ion-icon name="person-outline" slot="start"></ion-icon>
+        <ion-label position="floating">Full Name *</ion-label>
+        <ion-input [(ngModel)]="user.fullName"></ion-input>
+      </ion-item>
+
+      <!-- Email -->
+      <ion-item>
+        <ion-icon name="mail-outline" slot="start"></ion-icon>
+        <ion-label position="floating">Email *</ion-label>
+        <ion-input type="email" [(ngModel)]="user.email"></ion-input>
+      </ion-item>
+
+      <!-- Password -->
+      <ion-item>
+        <ion-icon name="lock-closed-outline" slot="start"></ion-icon>
+        <ion-label position="floating">Password *</ion-label>
+        <ion-input type="password" [(ngModel)]="user.password"></ion-input>
+      </ion-item>
+
+      <!-- Mobile -->
+      <ion-item>
+        <ion-icon name="call-outline" slot="start"></ion-icon>
+        <ion-label position="floating">Mobile Number</ion-label>
+        <ion-input type="tel" [(ngModel)]="user.number"></ion-input>
+      </ion-item>
+
+      <!-- Age -->
+      <ion-item>
+        <ion-icon name="hourglass-outline" slot="start"></ion-icon>
+        <ion-label position="floating">Age</ion-label>
+        <ion-input type="number" [(ngModel)]="user.age"></ion-input>
+      </ion-item>
+
+      <!-- Address -->
+      <ion-item>
+        <ion-icon name="location-outline" slot="start"></ion-icon>
+        <ion-label position="floating">Address</ion-label>
+        <ion-input [(ngModel)]="user.address"></ion-input>
+      </ion-item>
+
+      <!-- Role -->
+      <ion-item>
+        <ion-icon name="briefcase-outline" slot="start"></ion-icon>
+        <ion-label>Role</ion-label>
+        <ion-select [(ngModel)]="user.role" placeholder="Select role">
+          <ion-select-option value="customer">Customer</ion-select-option>
+          <ion-select-option value="provider">Service Provider</ion-select-option>
+        </ion-select>
+      </ion-item>
+
+      <!-- Aadhaar Upload -->
+      <div class="aadhaar-box" (click)="aadhaarInput.click()">
+        <ion-icon name="document-attach-outline"></ion-icon>
+        <p *ngIf="aadhaarFileName; else selectText">
+          {{ aadhaarFileName }}
+        </p>
+
+        <ng-template #selectText>
+          <p>Upload Aadhaar Card *</p>
+        </ng-template>
+
+        <input
+          hidden
+          type="file"
+          accept=".pdf,.jpg,.jpeg,.png"
+          #aadhaarInput
+          (change)="onAadhaarSelect($event)">
+      </div>
+
+    </ion-list>
+
+    <!-- Register Button -->
+    <ion-button
+      expand="block"
+      class="register-btn"
+      (click)="onRegister()">
+      Register
+    </ion-button>
+
+    <!-- Login Redirect -->
+    <p class="login-msg">
+      Already have an account?
+      <a (click)="backtohome()">Login</a>
+    </p>
+
+  </div>
+
+</ion-content>

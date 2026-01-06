@@ -1,0 +1,85 @@
+/* Page background */
+.login-page {
+  --background: #f5f6fa; /* light solid background */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  font-family: 'Poppins', sans-serif;
+}
+
+/* Card container */
+.login-wrapper {
+  background: #ffffff; /* solid white background for readability */
+  border-radius: 20px;
+  padding: 40px 30px;
+  width: 100%;
+  max-width: 400px;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.1);
+  text-align: center;
+  color: #333;
+}
+
+/* Header */
+.login-header {
+  margin-bottom: 25px;
+}
+
+.login-icon {
+  font-size: 50px;
+  color: #3880ff; /* Ionic primary color */
+  margin-bottom: 10px;
+}
+
+.login-header h2 {
+  font-size: 26px;
+  margin-bottom: 5px;
+}
+
+.login-header p {
+  font-size: 14px;
+  color: #666;
+}
+
+/* Input fields */
+.input-item {
+  --background: #f0f0f0; /* solid grey background */
+  --border-radius: 12px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+}
+
+.input-field {
+  color: #333; /* text color */
+}
+
+.input-field::part(input) {
+  color: #333;
+}
+
+/* Icons inside inputs */
+ion-icon {
+  color: #3880ff;
+}
+
+/* Buttons */
+.login-btn {
+  --border-radius: 12px;
+  --background: #3880ff; /* Ionic primary color */
+  color: #fff;
+  font-weight: 600;
+  margin-top: 10px;
+}
+
+.register-btn {
+  --border-radius: 12px;
+  --border-color: #3880ff;
+  color: #3880ff;
+  margin-top: 10px;
+}
+
+.back-btn {
+  margin-top: 10px;
+  font-size: 14px;
+  color: #666;
+}
