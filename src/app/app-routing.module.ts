@@ -67,7 +67,11 @@ const routes: Routes = [
   {
     path: 'auth',
     loadChildren: () => import('./auth/auth.module').then( m => m.AuthPageModule)
-  }
+  },
+  {
+  path: 'booking-history',
+  loadComponent: () => import('./component/booking-history/booking-history.component').then(m => m.BookingHistoryComponent)
+  },
 ];
 
 @NgModule({

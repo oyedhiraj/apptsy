@@ -1,0 +1,47 @@
+<ion-header>
+  <ion-toolbar class="lux-header">
+    <ion-title>My Bookings</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="lux-bg">
+
+  <div *ngIf="bookings.length === 0" class="empty-state">
+    <ion-icon name="calendar-outline"></ion-icon>
+    <p>No bookings yet!</p>
+    <p>Book a service and it will appear here.</p>
+  </div>
+
+  <div *ngFor="let booking of bookings" class="lux-card booking-card fade-up">
+
+    <!-- Header row: Service + Status -->
+    <div class="booking-header">
+      <h3>{{ booking.serviceType }}</h3>
+      <span [ngClass]="{'confirmed': booking.status==='Confirmed', 'cancelled': booking.status==='Cancelled'}">
+        {{ booking.status }}
+      </span>
+    </div>
+
+    <!-- Details rows -->
+    <div class="booking-details">
+      <div class="info-row">
+        <ion-icon name="person-outline"></ion-icon>
+        <span>{{ booking.customerName }}</span>
+      </div>
+      <div class="info-row">
+        <ion-icon name="time-outline"></ion-icon>
+        <span>{{ booking.slotTime }}</span>
+      </div>
+      <div class="info-row">
+        <ion-icon name="location-outline"></ion-icon>
+        <span>{{ booking.customerLocation }}</span>
+      </div>
+      <div class="info-row">
+        <ion-icon name="cash-outline"></ion-icon>
+        <span>₹{{ booking.price }}</span>
+      </div>
+    </div>
+
+  </div>
+
+</ion-content>

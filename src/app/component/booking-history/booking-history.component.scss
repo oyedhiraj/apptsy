@@ -1,0 +1,85 @@
+.lux-bg {
+  --background: radial-gradient(circle at top, #eef2ff, #dbeafe);
+  padding: 16px;
+}
+
+.lux-header {
+  --background: linear-gradient(135deg, #6366f1, #8b5cf6);
+  color: white;
+}
+
+.booking-card {
+  background: rgba(255,255,255,0.85);
+  border-radius: 18px;
+  padding: 18px;
+  margin-bottom: 16px;
+  box-shadow: 0 12px 28px rgba(0,0,0,0.08);
+}
+
+.booking-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.booking-header h3 {
+  margin: 0;
+  font-size: 1.2rem;
+}
+
+.booking-header span {
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: white;
+}
+
+.booking-header .confirmed {
+  background: #22c55e;
+}
+
+.booking-header .cancelled {
+  background: #ef4444;
+}
+
+.booking-details .info-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 6px;
+  color: #374151;
+}
+
+.booking-details .info-row ion-icon {
+  color: #6366f1;
+  font-size: 18px;
+}
+
+.fade-up {
+  animation: fadeUp 0.5s ease;
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.empty-state {
+  text-align: center;
+  margin-top: 50px;
+  color: #6b7280;
+}
+
+.empty-state ion-icon {
+  font-size: 50px;
+  color: #6366f1;
+  margin-bottom: 16px;
+}
