@@ -50,8 +50,7 @@ export class MemberInfoPage implements OnInit {
   }
 
   provideService(member: Member) {
-    this.router.navigateByUrl('/service-booking', { state: { member } });
-  }
+    this.router.navigate(['/service-booking',member])}
 
   getServiceIcon(service: string) {
     switch (service) {

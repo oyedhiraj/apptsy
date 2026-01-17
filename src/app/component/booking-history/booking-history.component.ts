@@ -13,13 +13,14 @@ import { BookingService } from '../../services/booking.service'
 export class BookingHistoryComponent {
 
   bookings: any[] = [];
+  vendorId = 'VENDOR_001';//not use
 
   constructor(private bookingService: BookingService) {
     this.loadBookings();
   }
 
   loadBookings() {
-    // this.bookingService.getBookings().subscribe({
+    // this.bookingService.getVendorBookings().subscribe({
     //   next: (res: any) => {
     //     this.bookings = res;
     //   },
@@ -27,6 +28,9 @@ export class BookingHistoryComponent {
     //     console.error('Failed to fetch bookings', err);
     //   }
     // });
+    this.bookingService.getVendorBookings(this.vendorId).subscribe(res => {
+      this.bookings = res;
+    });
     alert("done");
   }
 }

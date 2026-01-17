@@ -5,7 +5,7 @@ import {
   LoadingController
 } from '@ionic/angular';
 import { CommonModule } from '@angular/common';
-import { Router } from '@angular/router';
+import { Router,ActivatedRoute } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 import { BookingService } from '../../services/booking.service';
 
@@ -20,11 +20,7 @@ export class ServiceBookingComponent {
 
   bookingConfirmed = false;
 
-  member = {
-    name: 'John Doe',
-    service: 'Carpenter',
-    location: 'Sakinaka'
-  };
+  member:any;
 
   service = {
     price: 499,
@@ -32,7 +28,7 @@ export class ServiceBookingComponent {
   };
 
   vendorId = 'VENDOR_001';
-  selectedSlot!: string;
+  selectedSlot!: any;
 
   timeSlots = [
     { label: 'Morning', slots: ['09:00 AM', '10:00 AM', '11:00 AM'] },
@@ -44,11 +40,18 @@ export class ServiceBookingComponent {
     private bookingService: BookingService,
     private toastCtrl: ToastController,
     private loadingCtrl: LoadingController,
-    private router: Router
+    private router: Router,
+    private route : ActivatedRoute
   ) {}
 
+  ngOnInit() {
+  this.route.params.subscribe(params => {
+    this.member = params;
+  });
+}
+
   selectSlot(slot: string) {
-    this.selectedSlot = slot;
+    this.selectedSlot = new Date(`${slot}`);
   }
 
   async bookSlot() {
@@ -62,27 +65,27 @@ export class ServiceBookingComponent {
     });
     await loading.present();
 
-    // const bookingData = {
-    //   customerName: this.member.name,
-    //   customerPhone: '9876543210',
-    //   serviceType: this.member.service,
-    //   slotTime: this.selectedSlot,
-    //   vendorId: this.vendorId,
-    //   customerLocation: this.member.location
-    // };
+    const bookingData = {
+      customerName: this.member.name,
+      customerPhone: '9876543210',
+      serviceType: this.member.service,
+      slotTime: this.selectedSlot,
+      vendorId: this.vendorId,
+      customerLocation: this.member.location
+    };
 
-    // this.bookingService.createBooking(bookingData).subscribe({
-    //   next: async () => {
-    //     await loading.dismiss();
-    //     this.bookingConfirmed = true;
-    //   },
-    //   error: async () => {
-    //     await loading.dismiss();
-    //     this.showToast('Booking failed', 'danger');
-    //   }
-    // });
-    loading.dismiss();
-    this.bookingConfirmed = true;
+    this.bookingService.createBooking(bookingData).subscribe({
+      next: async () => {
+        await loading.dismiss();
+        this.bookingConfirmed = true;
+      },
+      error: async () => {
+        await loading.dismiss();
+        this.showToast('Booking failed', 'danger');
+      }
+    });
+    // loading.dismiss();
+    // this.bookingConfirmed = true;
   }
 
   goToHistory() {
