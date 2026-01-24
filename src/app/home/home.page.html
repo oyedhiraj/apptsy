@@ -1,25 +1,66 @@
 <ion-header>
   <ion-toolbar color="primary">
-    <ion-title slot="start">Home Services</ion-title>
+    <ion-buttons slot="start">
+      <ion-menu-button autoHide="false"></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Home Services</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content fullscreen>
+  <!-- Banner -->
   <div class="banner">
     <h2>Welcome to Smart Services</h2>
     <p>Book trusted professionals near you</p>
   </div>
 
+  <!-- Service Grid -->
   <ion-grid class="service-grid">
     <ion-row>
       <ion-col size="6" *ngFor="let service of services">
-        <div class="service-card" [style.background]="service.color" (click)="openPopup(service)">
+        <div
+          class="service-card"
+          [style.background]="service.color"
+          (click)="openPopup(service)"
+        >
           <ion-icon [name]="service.icon"></ion-icon>
           <h3>{{ service.name }}</h3>
         </div>
       </ion-col>
     </ion-row>
   </ion-grid>
+
+  <!-- Swipe Card Section (Below Services) -->
+<div class="swipe-wrapper">
+  <div class="swipe-card animate-fade">
+    <div class="apptsy-header">
+      <h1 class="apptsy-logo"><ion-icon name="sparkles-outline"></ion-icon>AppTsy</h1>
+      <h3 class="apptsy-subtitle"> Smart Service & Earning App</h3>
+    </div>
+    <ul class="bullet-list">
+      <li><ion-icon name="arrow-forward-circle-outline"></ion-icon> <strong>फोकल टू लोकल</strong> — स्थानीय सेवाओं को आसान, भरोसेमंद और सुलभ बनाना।</li>
+      <li><ion-icon name="arrow-forward-circle-outline"></ion-icon> <strong>भारत का पहला सर्विस प्रोवाइडर एवं वेल्थ जनरेटर ऐप</strong> — सेवा, कमाई और विकास के लिए एक ही प्लेटफ़ॉर्म।</li>
+      <li><ion-icon name="arrow-forward-circle-outline"></ion-icon> <strong>“AppTsy है तो चिंता छोड़ो, घर बैठे सेवा पाओ”</strong> — अब हर ज़रूरत की सेवा, सिर्फ़ एक ऐप पर।</li>
+      <li><ion-icon name="arrow-forward-circle-outline"></ion-icon> <strong>“ग्राहक की चिंता छोड़ो, हर रोज़ कमाओ”</strong> — सेवा प्रदाताओं के लिए रोज़गार और कमाई का स्मार्ट समाधान।</li>
+      <li><ion-icon name="arrow-forward-circle-outline"></ion-icon> <strong>ग्राहक और सेवा का अनोखा संगम</strong> — जहाँ तकनीक मिलती है भरोसे के साथ।</li>
+    </ul>
+  </div>
+</div>
+<div class="credits-card">
+  <p>
+    <ion-icon name="briefcase-outline"></ion-icon>
+    <strong>Product by:</strong> Transyergy Enterprises
+  </p>
+  <p>
+    <ion-icon name="brush-outline"></ion-icon>
+    <strong>Designed by:</strong> Dheeraj Vishwakarma
+  </p>
+  <p>
+    <ion-icon name="megaphone-outline"></ion-icon>
+    <strong>Marketing by:</strong> Threestar Entertainment
+  </p>
+</div>
+
 
   <ion-modal [isOpen]="showPopup" (ionModalDidDismiss)="closePopup()">
     <ng-template>
@@ -36,7 +77,9 @@
           Login as Customer
         </ion-button>
 
-        <ion-button fill="clear" color="medium" (click)="closePopup()">Close</ion-button>
+        <ion-button fill="clear" color="medium" (click)="closePopup()">
+          Close
+        </ion-button>
       </div>
     </ng-template>
   </ion-modal>

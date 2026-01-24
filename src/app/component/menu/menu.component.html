@@ -1,0 +1,33 @@
+<ion-menu contentId="main-content" type="overlay">
+  <ion-header>
+    <ion-toolbar color="primary">
+      <ion-title>Menu</ion-title>
+      <p style="color: red;">Menu Loaded</p>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-content>
+    <!-- Profile -->
+    <div class="profile-section ion-text-center">
+      <ion-avatar>
+        <img src="assets/profile.jpg" />
+      </ion-avatar>
+      <h2>{{ userName }}</h2>
+    </div>
+
+    <!-- Menu Items -->
+    <ion-list>
+      <ion-menu-toggle auto-hide="true">
+        <ion-item routerLink="/order-history">
+          <ion-icon name="receipt-outline" slot="start"></ion-icon>
+          <ion-label>Order History</ion-label>
+        </ion-item>
+
+        <ion-item button (click)="logout()">
+          <ion-icon name="log-out-outline" slot="start"></ion-icon>
+          <ion-label>Logout</ion-label>
+        </ion-item>
+      </ion-menu-toggle>
+    </ion-list>
+  </ion-content>
+</ion-menu>

@@ -1,0 +1,61 @@
+/* gradient background */
+.custom-menu {
+  --background: linear-gradient(135deg, #0f172a, #1f2937);
+}
+
+/* top card */
+.menu-top-card {
+  background: rgba(255, 255, 255, 0.06);
+  border-radius: 0 0 30px 30px;
+  padding: 40px 20px 30px;
+  text-align: center;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.25);
+}
+
+/* avatar */
+.profile-avatar {
+  margin: 0 auto 10px;
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 3px solid rgba(255, 255, 255, 0.35);
+}
+
+/* name */
+.profile-name {
+  margin: 10px 0 4px;
+  font-size: 20px;
+  font-weight: 700;
+  color: #fff;
+}
+
+/* email */
+.profile-email {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.75);
+}
+
+/* list */
+.menu-list {
+  padding: 10px;
+}
+
+/* menu item */
+ion-item {
+  --background: rgba(255, 255, 255, 0.06);
+  margin: 10px 15px;
+  border-radius: 15px;
+  color: #fff;
+}
+
+/* icon color */
+ion-item ion-icon {
+  color: #fff;
+}
+
+/* active highlight */
+ion-item.active {
+  background: rgba(255, 255, 255, 0.16);
+  border-left: 4px solid #22c55e;
+}

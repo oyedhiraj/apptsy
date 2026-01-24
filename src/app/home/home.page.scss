@@ -148,5 +148,153 @@ ion-toolbar {
     font-weight: 500;
   }
 }
+/* Swipe Wrapper */
+.swipe-wrapper {
+  padding: 14px 12px 0;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+}
+
+.swipe-card {
+  width: 92%;
+  min-width: 320px;
+  margin: 0 auto;
+  padding: 18px 16px;
+  border-radius: 22px;
+  background: linear-gradient(135deg, #1a237e, #283593);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.28),
+              0 0 20px rgba(26, 35, 126, 0.35);
+  text-align: left;
+  color: #fff;
+  scroll-snap-align: center;
+  transform: translateY(0);
+}
+
+/* Fade-in Animation */
+.animate-fade {
+  opacity: 0;
+  animation: fadeIn 1s ease-in forwards;
+  animation-delay: 0.3s;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Card Title */
+.swipe-card h3 {
+  font-size: 16px;
+  font-weight: 700;
+  margin-bottom: 14px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Bullet List */
+.bullet-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.bullet-list li {
+  font-size: 13px;
+  line-height: 1.6;
+  margin: 10px 0;
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.bullet-list ion-icon {
+  font-size: 18px;
+  margin-top: 2px;
+}
+
+/* Credits Section */
+.credits {
+  text-align: center;
+  padding: 12px 14px 26px;
+  font-size: 12px;
+  color: #555;
+}
+
+.credits strong {
+  color: #1a237e;
+}
+
+.divider {
+  width: 80%;
+  height: 1px;
+  background: #d0d0d0;
+  margin: 10px auto 12px;
+}
+
+/* Credits Card */
+.credits-card {
+  margin: 14px 14px 30px;
+  padding: 14px 16px;
+  border-radius: 18px;
+  background: #fff;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.14);
+  text-align: left;
+}
+
+.credits-card p {
+  margin: 10px 0;
+  font-size: 13px;
+  color: #555;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.credits-card ion-icon {
+  font-size: 18px;
+  color: #1a237e;
+}
+
+.credits-card strong {
+  color: #1a237e;
+}
+
+/* AppTsy Logo Header */
+.apptsy-header {
+  text-align: center;
+  margin-bottom: 16px;
+}
+
+.apptsy-logo {
+  font-size: 26px;
+  font-weight: 800;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  letter-spacing: 0.5px;
+}
+
+.apptsy-logo ion-icon {
+  font-size: 28px;
+}
+
+.apptsy-subtitle {
+  font-size: 13px;
+  font-weight: 500;
+  margin-top: 6px;
+  opacity: 0.85;
+  text-align: center;
+  display: block;
+}
+
+.swipe-card .apptsy-subtitle {
+  display: block !important;
+  text-align: center !important;
+  justify-content: center;  // safety override
+}
+
 
 
