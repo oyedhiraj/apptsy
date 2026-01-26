@@ -15,29 +15,43 @@ import { BookingService } from '../services/booking.service';
 export class VendorDashboardPage implements OnInit {
 
   bookings: any[] = [];
-  vendorId = 'VENDOR_001';
+  vendorId = '';
   isLoading = true;
   selectedStatus = 'all';
 
-  constructor(private bookingService: BookingService,
-              private toastCtrl: ToastController) {}
+  constructor(
+    private bookingService: BookingService,
+    private toastCtrl: ToastController
+  ) {}
 
   ngOnInit() {
+    this.vendorId = localStorage.getItem('vendorId') || '';
     this.loadBookings();
   }
 
   loadBookings() {
+    if (!this.vendorId) {
+      this.showToast('Vendor ID missing. Please login again.', 'danger');
+      return;
+    }
+
     this.isLoading = true;
     this.bookingService.getVendorBookings(this.vendorId).subscribe(res => {
-      this.bookings = res;
+      this.bookings = res as any[];
       this.isLoading = false;
+    }, err => {
+      this.isLoading = false;
+      this.showToast('Failed to load bookings', 'danger');
     });
   }
 
   refreshBookings(event: any) {
     this.bookingService.getVendorBookings(this.vendorId).subscribe(res => {
-      this.bookings = res;
+      this.bookings = res as any[];
       event.target.complete();
+    }, () => {
+      event.target.complete();
+      this.showToast('Refresh failed', 'danger');
     });
   }
 
@@ -69,5 +83,14 @@ export class VendorDashboardPage implements OnInit {
       case 'cancelled': return 'danger';
       default: return 'medium';
     }
+  }
+
+  async showToast(message: string, color: string) {
+    const toast = await this.toastCtrl.create({
+      message,
+      duration: 2000,
+      color
+    });
+    toast.present();
   }
 }

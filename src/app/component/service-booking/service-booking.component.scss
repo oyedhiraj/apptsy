@@ -178,3 +178,30 @@
   font-size: 20px;
   color: #6366f1;
 }
+
+.slot-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+.slot-chip {
+  padding: 12px;
+  border-radius: 10px;
+  text-align: center;
+  border: 1px solid #ccc;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.slot-chip:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.slot-chip.selected {
+  background: #3880ff;
+  color: #fff;
+  border: 1px solid #3880ff;
+}

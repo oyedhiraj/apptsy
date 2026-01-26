@@ -5,87 +5,87 @@ import {
   LoadingController
 } from '@ionic/angular';
 import { CommonModule } from '@angular/common';
-import { Router,ActivatedRoute } from '@angular/router';
+import { FormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 import { BookingService } from '../../services/booking.service';
+import { lastValueFrom } from 'rxjs';
 
 @Component({
   selector: 'app-service-booking',
   standalone: true,
   templateUrl: './service-booking.component.html',
   styleUrls: ['./service-booking.component.scss'],
-  imports: [IonicModule, CommonModule, HttpClientModule]
+  imports: [IonicModule, CommonModule, FormsModule, HttpClientModule]
 })
 export class ServiceBookingComponent {
 
   bookingConfirmed = false;
+  member: any;
+  service = { price: 499, duration: '1 Hour' };
 
-  member:any;
-
-  service = {
-    price: 499,
-    duration: '1 Hour'
-  };
-
-  vendorId = 'VENDOR_001';
-  selectedSlot!: any;
-
-  timeSlots = [
-    { label: 'Morning', slots: ['09:00 AM', '10:00 AM', '11:00 AM'] },
-    { label: 'Afternoon', slots: ['12:00 PM', '01:00 PM', '03:00 PM'] },
-    { label: 'Evening', slots: ['05:00 PM', '06:00 PM', '07:00 PM'] }
-  ];
+  selectedDateTime: any;
+  minDate = new Date().toISOString();
 
   constructor(
     private bookingService: BookingService,
     private toastCtrl: ToastController,
     private loadingCtrl: LoadingController,
-    private router: Router,
-    private route : ActivatedRoute
+    private router: Router
   ) {}
 
   ngOnInit() {
-  this.route.params.subscribe(params => {
-    this.member = params;
-  });
-}
+    const state = this.router.getCurrentNavigation()?.extras.state as { member: any };
+    this.member = state?.member;
 
-  selectSlot(slot: string) {
-    this.selectedSlot = new Date(`${slot}`);
+    if (!this.member) {
+      this.showToast('Member data missing!', 'danger');
+      this.router.navigate(['/member-info']);
+    }
   }
 
   async bookSlot() {
-    if (!this.selectedSlot) {
-      this.showToast('Please select a time slot', 'warning');
+    if (!this.selectedDateTime) {
+      this.showToast('Please select date and time', 'warning');
       return;
     }
+
+    const bookingDate = new Date(this.selectedDateTime);
 
     const loading = await this.loadingCtrl.create({
       message: 'Confirming your booking...'
     });
     await loading.present();
 
-    const bookingData = {
-      customerName: this.member.name,
-      customerPhone: '9876543210',
-      serviceType: this.member.service,
-      slotTime: this.selectedSlot,
-      vendorId: this.vendorId,
-      customerLocation: this.member.location
-    };
+    try {
+      const res: any = await lastValueFrom(this.bookingService.checkVendorStatus(this.member.vendorId));
 
-    this.bookingService.createBooking(bookingData).subscribe({
-      next: async () => {
+      if (res.status === 'busy') {
         await loading.dismiss();
-        this.bookingConfirmed = true;
-      },
-      error: async () => {
-        await loading.dismiss();
-        this.showToast('Booking failed', 'danger');
+        this.showToast('Vendor is busy right now. Try later.', 'danger');
+        return;
       }
-    });
-    // loading.dismiss();
-    // this.bookingConfirmed = true;
+
+      const bookingData = {
+        customerName: this.member.name,
+        customerPhone: this.member.phone || '9876543210',
+        serviceType: this.member.serviceType,
+        slotTime: bookingDate,
+        vendorId: this.member.vendorId,
+        location: this.member.location
+      };
+
+      await lastValueFrom(this.bookingService.createBooking(bookingData));
+      await lastValueFrom(this.bookingService.setVendorStatus(this.member.vendorId, 'busy'));
+
+      await loading.dismiss();
+      this.bookingConfirmed = true;
+      this.showToast('Booking Confirmed!', 'success');
+
+    } catch (error) {
+      await loading.dismiss();
+      this.showToast('Booking failed', 'danger');
+    }
   }
 
   goToHistory() {

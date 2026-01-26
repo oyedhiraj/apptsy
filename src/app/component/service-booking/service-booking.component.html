@@ -6,37 +6,23 @@
 
 <ion-content class="lux-bg">
 
-  <!-- ===== STEP INDICATOR ===== -->
-  <!-- <div class="stepper">
-    <div class="step active">1</div>
-    <div class="line"></div>
-    <div class="step" [class.active]="bookingConfirmed">2</div>
-  </div> -->
-
-  <!-- ===== BOOKING VIEW ===== -->
+  <!-- BOOKING VIEW -->
   <section *ngIf="!bookingConfirmed" class="fade-up">
 
     <!-- Provider Card -->
-    <!-- Provider Card -->
-<div class="lux-card hero-card">
+    <div class="lux-card hero-card">
+      <h2 class="provider-name">{{ member.name }}</h2>
 
-  <!-- Provider Name -->
-  <h2 class="provider-name">{{ member.name }}</h2>
+      <div class="info-row">
+        <ion-icon name="construct-outline"></ion-icon>
+        <span>{{ member.serviceType }}</span>
+      </div>
 
-  <!-- Service Row -->
-  <div class="info-row">
-    <ion-icon name="construct-outline"></ion-icon>
-    <span>{{ member.service }}</span>
-  </div>
-
-  <!-- Location Row -->
-  <div class="info-row">
-    <ion-icon name="location-outline"></ion-icon>
-    <span>{{ member.location }}</span>
-  </div>
-
-</div>
-
+      <div class="info-row">
+        <ion-icon name="location-outline"></ion-icon>
+        <span>{{ member.location }}</span>
+      </div>
+    </div>
 
     <!-- Price -->
     <div class="lux-card price-card">
@@ -47,34 +33,23 @@
       <ion-icon name="sparkles-outline"></ion-icon>
     </div>
 
-    <!-- Slots -->
+    <!-- DATE + TIME PICKER -->
     <div class="lux-card">
-      <h3>Select Time Slot</h3>
-
-      <div *ngFor="let group of timeSlots" class="slot-section">
-        <span class="slot-label">{{ group.label }}</span>
-
-        <div class="slot-grid">
-          <div
-            class="lux-slot"
-            *ngFor="let slot of group.slots"
-            [class.selected]="selectedSlot === slot"
-            (click)="selectSlot(slot)"
-          >
-            {{ slot }}
-          </div>
-        </div>
-      </div>
+      <h3>Select Date & Time</h3>
+      <ion-datetime
+        display-format="DD MMM YYYY, hh:mm A"
+        picker-format="DD MMM YYYY, hh:mm A"
+        [(ngModel)]="selectedDateTime"
+        [min]="minDate"
+      ></ion-datetime>
     </div>
 
-    <!-- CTA -->
     <button class="lux-btn" (click)="bookSlot()">
       🚀 Confirm Booking
     </button>
-
   </section>
 
-  <!-- ===== CONFIRMATION VIEW ===== -->
+  <!-- CONFIRMATION VIEW -->
   <section *ngIf="bookingConfirmed" class="fade-up confirm">
 
     <div class="success-glow">✓</div>
@@ -83,16 +58,15 @@
     <p>Your service has been successfully scheduled</p>
 
     <div class="lux-card summary-card">
-      <p><b>Service:</b> {{ member.service }}</p>
+      <p><b>Service:</b> {{ member.serviceType }}</p>
       <p><b>Provider:</b> {{ member.name }}</p>
-      <p><b>Time:</b> {{ selectedSlot }}</p>
+      <p><b>Date & Time:</b> {{ selectedDateTime | date:'full' }}</p>
       <p><b>Amount:</b> ₹{{ service.price }}</p>
     </div>
 
     <button class="lux-btn secondary" (click)="goToHistory()">
       View My Bookings
     </button>
-
   </section>
 
 </ion-content>

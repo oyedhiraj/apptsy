@@ -8,7 +8,7 @@
 
   <div class="register-card" fullscreen>
 
-    <!-- Profile Image Upload Box -->
+    <!-- Profile Image Upload -->
     <div class="profile-section">
       <div class="profile-pic" (click)="profileInput.click()">
         <img *ngIf="profilePreview; else placeholder" [src]="profilePreview">
@@ -17,98 +17,97 @@
         </ng-template>
       </div>
       <input hidden type="file" accept="image/*" #profileInput (change)="onProfileSelect($event)">
-      <p class="upload-text">Tap to upload profile photo</p>
+      <p class="upload-text">Tap to upload profile photo *</p>
     </div>
 
     <ion-list lines="full" class="form-area">
 
-      <!-- Full Name -->
       <ion-item>
-        <ion-icon name="person-outline" slot="start"></ion-icon>
         <ion-label position="floating">Full Name *</ion-label>
         <ion-input [(ngModel)]="user.fullName"></ion-input>
       </ion-item>
 
-      <!-- Email -->
       <ion-item>
-        <ion-icon name="mail-outline" slot="start"></ion-icon>
         <ion-label position="floating">Email *</ion-label>
         <ion-input type="email" [(ngModel)]="user.email"></ion-input>
       </ion-item>
 
-      <!-- Password -->
       <ion-item>
-        <ion-icon name="lock-closed-outline" slot="start"></ion-icon>
         <ion-label position="floating">Password *</ion-label>
         <ion-input type="password" [(ngModel)]="user.password"></ion-input>
       </ion-item>
 
-      <!-- Mobile -->
       <ion-item>
-        <ion-icon name="call-outline" slot="start"></ion-icon>
         <ion-label position="floating">Mobile Number</ion-label>
-        <ion-input type="tel" [(ngModel)]="user.number"></ion-input>
+        <ion-input [(ngModel)]="user.number"></ion-input>
       </ion-item>
 
-      <!-- Age -->
       <ion-item>
-        <ion-icon name="hourglass-outline" slot="start"></ion-icon>
         <ion-label position="floating">Age</ion-label>
         <ion-input type="number" [(ngModel)]="user.age"></ion-input>
       </ion-item>
 
-      <!-- Address -->
       <ion-item>
-        <ion-icon name="location-outline" slot="start"></ion-icon>
         <ion-label position="floating">Address</ion-label>
         <ion-input [(ngModel)]="user.address"></ion-input>
       </ion-item>
 
+      <!-- Gender -->
+      <ion-item>
+        <ion-label>Gender *</ion-label>
+        <ion-select [(ngModel)]="user.gender" placeholder="Select gender">
+          <ion-select-option value="male">Male</ion-select-option>
+          <ion-select-option value="female">Female</ion-select-option>
+          <ion-select-option value="other">Other</ion-select-option>
+        </ion-select>
+      </ion-item>
+
       <!-- Role -->
       <ion-item>
-        <ion-icon name="briefcase-outline" slot="start"></ion-icon>
-        <ion-label>Role</ion-label>
+        <ion-label>Role *</ion-label>
         <ion-select [(ngModel)]="user.role" placeholder="Select role">
           <ion-select-option value="customer">Customer</ion-select-option>
-          <ion-select-option value="provider">Service Provider</ion-select-option>
+          <ion-select-option value="vendor">Service Provider</ion-select-option>
+        </ion-select>
+      </ion-item>
+
+      <!-- Service Type (Only Vendor) -->
+      <ion-item *ngIf="user.role === 'vendor'">
+        <ion-label>Type of Service *</ion-label>
+        <ion-select [(ngModel)]="user.serviceType" placeholder="Select service">
+          <ion-select-option value="electrician">Electrician</ion-select-option>
+          <ion-select-option value="plumber">Plumber</ion-select-option>
+          <ion-select-option value="carpenter">Carpenter</ion-select-option>
+          <ion-select-option value="pumper">Pumper</ion-select-option>
         </ion-select>
       </ion-item>
 
       <!-- Aadhaar Upload -->
       <div class="aadhaar-box" (click)="aadhaarInput.click()">
-        <ion-icon name="document-attach-outline"></ion-icon>
-        <p *ngIf="aadhaarFileName; else selectText">
+        <p *ngIf="aadhaarFileName; else uploadText">
           {{ aadhaarFileName }}
         </p>
-
-        <ng-template #selectText>
+        <ng-template #uploadText>
           <p>Upload Aadhaar Card *</p>
         </ng-template>
-
         <input
           hidden
           type="file"
-          accept=".pdf,.jpg,.jpeg,.png"
+          accept=".jpg,.jpeg,.png,.pdf"
           #aadhaarInput
           (change)="onAadhaarSelect($event)">
       </div>
 
     </ion-list>
 
-    <!-- Register Button -->
-    <ion-button
-      expand="block"
-      class="register-btn"
-      (click)="onRegister()">
+    <ion-button expand="block" (click)="onRegister()">
       Register
     </ion-button>
 
-    <!-- Login Redirect -->
     <p class="login-msg">
       Already have an account?
       <a (click)="backtohome()">Login</a>
     </p>
 
   </div>
-
 </ion-content>

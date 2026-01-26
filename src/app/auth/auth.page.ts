@@ -38,16 +38,13 @@ export class AuthPage {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email: this.email, password: this.password })
       });
-
       const data = await response.json();
-
-      if (!response.ok) {
+      if (!response.ok || data.user.role != this.role) {
         alert(data.message || 'Invalid credentials');
         return;
       }
-
       localStorage.setItem('token', data.token);
-
+      localStorage.setItem('vendorId', data.user.id);
       alert('Login successful');
 
       if (this.role === 'vendor') this.router.navigate(['/vendor-dashboard']);

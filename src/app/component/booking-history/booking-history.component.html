@@ -6,19 +6,30 @@
 
 <ion-content class="lux-bg">
 
+  <!-- Empty state -->
   <div *ngIf="bookings.length === 0" class="empty-state">
     <ion-icon name="calendar-outline"></ion-icon>
     <p>No bookings yet!</p>
     <p>Book a service and it will appear here.</p>
   </div>
 
+  <!-- Booking List -->
   <div *ngFor="let booking of bookings" class="lux-card booking-card fade-up">
 
     <!-- Header row: Service + Status -->
     <div class="booking-header">
       <h3>{{ booking.serviceType }}</h3>
-      <span [ngClass]="{'confirmed': booking.status==='Confirmed', 'cancelled': booking.status==='Cancelled'}">
-        {{ booking.status }}
+
+      <!-- Status badge -->
+      <span
+        [ngClass]="{
+          'pending': booking.status === 'pending',
+          'confirmed': booking.status === 'confirmed',
+          'cancelled': booking.status === 'cancelled'
+        }"
+        class="status-badge"
+      >
+        {{ booking.status | titlecase }}
       </span>
     </div>
 
@@ -28,17 +39,20 @@
         <ion-icon name="person-outline"></ion-icon>
         <span>{{ booking.customerName }}</span>
       </div>
+
       <div class="info-row">
         <ion-icon name="time-outline"></ion-icon>
         <span>{{ booking.slotTime }}</span>
       </div>
+
       <div class="info-row">
         <ion-icon name="location-outline"></ion-icon>
-        <span>{{ booking.customerLocation }}</span>
+        <span>{{ booking.location }}</span>
       </div>
+
       <div class="info-row">
-        <ion-icon name="cash-outline"></ion-icon>
-        <span>₹{{ booking.price }}</span>
+        <ion-icon name="call-outline"></ion-icon>
+        <span>{{ booking.customerPhone }}</span>
       </div>
     </div>
 

@@ -22,7 +22,9 @@ export class RegisterComponent {
     number: '',
     age: '',
     address: '',
-    role: ''
+    gender: '',        // Added
+    role: '',
+    serviceType: ''
   };
 
   aadhaarFile: File | null = null;
@@ -31,7 +33,7 @@ export class RegisterComponent {
   profilePreview: string | ArrayBuffer | null = null;
 
   backtohome() {
-    this.router.navigate(['/login']);
+    this.router.navigate(['/auth']);
   }
 
   onProfileSelect(event: any) {
@@ -52,8 +54,22 @@ export class RegisterComponent {
   }
 
   async onRegister() {
-    if (!this.user.fullName || !this.user.email || !this.user.password || !this.profileFile || !this.aadhaarFile) {
+
+    if (
+      !this.user.fullName ||
+      !this.user.email ||
+      !this.user.password ||
+      !this.user.gender ||
+      !this.user.role ||
+      !this.profileFile ||
+      !this.aadhaarFile
+    ) {
       alert('Please fill all required fields');
+      return;
+    }
+
+    if (this.user.role === 'vendor' && !this.user.serviceType) {
+      alert('Please select type of service');
       return;
     }
 
@@ -64,9 +80,14 @@ export class RegisterComponent {
     formData.append('number', this.user.number);
     formData.append('age', this.user.age);
     formData.append('address', this.user.address);
+    formData.append('gender', this.user.gender); // Added
     formData.append('role', this.user.role);
     formData.append('profilePhoto', this.profileFile);
     formData.append('aadhaar', this.aadhaarFile);
+
+    if (this.user.role === 'vendor') {
+      formData.append('serviceType', this.user.serviceType);
+    }
 
     try {
       const response = await fetch('http://localhost:3000/api/register', {
@@ -81,12 +102,12 @@ export class RegisterComponent {
         return;
       }
 
-      alert('Registered successfully!');
+      alert('Registered successfully');
       this.router.navigate(['/login']);
 
     } catch (error) {
       console.error(error);
-      alert('Server error. Please try again later.');
+      alert('Server error');
     }
   }
 }
