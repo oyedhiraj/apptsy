@@ -3,7 +3,7 @@ import { IonicModule, ToastController } from '@ionic/angular';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-import { BookingService } from '../services/booking.service';
+import { BookingService, Booking } from '../services/booking.service';
 
 @Component({
   selector: 'app-vendor-dashboard',
@@ -14,10 +14,10 @@ import { BookingService } from '../services/booking.service';
 })
 export class VendorDashboardPage implements OnInit {
 
-  bookings: any[] = [];
-  vendorId = '';
+  bookings: Booking[] = [];
+  vendorId: string = '';
   isLoading = true;
-  selectedStatus = 'all';
+  selectedStatus: 'all' | 'pending' | 'confirmed' | 'cancelled' = 'all';
 
   constructor(
     private bookingService: BookingService,
@@ -26,49 +26,59 @@ export class VendorDashboardPage implements OnInit {
 
   ngOnInit() {
     this.vendorId = localStorage.getItem('vendorId') || '';
+
+    if (!this.vendorId) {
+      this.showToast('Vendor not logged in. Please login again.', 'danger');
+      return;
+    }
+
     this.loadBookings();
   }
 
   loadBookings() {
-    if (!this.vendorId) {
-      this.showToast('Vendor ID missing. Please login again.', 'danger');
-      return;
-    }
-
     this.isLoading = true;
-    this.bookingService.getVendorBookings(this.vendorId).subscribe(res => {
-      this.bookings = res as any[];
-      this.isLoading = false;
-    }, err => {
-      this.isLoading = false;
-      this.showToast('Failed to load bookings', 'danger');
+
+    this.bookingService.getVendorBookings(this.vendorId).subscribe({
+      next: (res) => {
+        this.bookings = res;
+        this.isLoading = false;
+      },
+      error: () => {
+        this.isLoading = false;
+        this.showToast('Failed to load bookings', 'danger');
+      }
     });
   }
 
   refreshBookings(event: any) {
-    this.bookingService.getVendorBookings(this.vendorId).subscribe(res => {
-      this.bookings = res as any[];
-      event.target.complete();
-    }, () => {
-      event.target.complete();
-      this.showToast('Refresh failed', 'danger');
+    this.bookingService.getVendorBookings(this.vendorId).subscribe({
+      next: (res) => {
+        this.bookings = res;
+        event.target.complete();
+      },
+      error: () => {
+        event.target.complete();
+        this.showToast('Refresh failed', 'danger');
+      }
     });
   }
 
-  get filteredBookings() {
-    if (this.selectedStatus === 'all') return this.bookings;
+  get filteredBookings(): Booking[] {
+    if (this.selectedStatus === 'all') {
+      return this.bookings;
+    }
     return this.bookings.filter(b => b.status === this.selectedStatus);
   }
 
-  async confirmBooking(id: string) {
-    this.bookingService.confirmBooking(id).subscribe(async () => {
-      const toast = await this.toastCtrl.create({
-        message: 'Booking confirmed',
-        duration: 2000,
-        color: 'success'
-      });
-      toast.present();
-      this.loadBookings();
+  confirmBooking(bookingId: string) {
+    this.bookingService.confirmBooking(bookingId).subscribe({
+      next: () => {
+        this.showToast('Booking confirmed', 'success');
+        this.loadBookings();
+      },
+      error: () => {
+        this.showToast('Failed to confirm booking', 'danger');
+      }
     });
   }
 

@@ -80,11 +80,17 @@ export class MemberInfoPage implements OnInit {
     return `http://localhost:3000/${path}`;
   }
 
-  provideService(member: Member) {
-    this.router.navigate(['/service-booking'], {
-      state: { member }
-    });
-  }
+  provideService(member: any) {
+  this.router.navigate(['/service-booking'], {
+    state: {
+      member: {
+        ...member,
+        vendorId: member._id   // ✅ MUST BE _id
+      }
+    }
+  });
+}
+
 
   getServiceIcon(service: string) {
     switch (service.toLowerCase()) {

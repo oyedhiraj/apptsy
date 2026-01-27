@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 export interface Booking {
@@ -10,7 +10,7 @@ export interface Booking {
   slotTime: string;
   vendorId: string;
   location: string;
-  status: string;
+  status: 'pending' | 'confirmed' | 'cancelled';
 }
 
 @Injectable({
@@ -19,32 +19,37 @@ export interface Booking {
 export class BookingService {
 
   private baseUrl = 'http://localhost:3000/api/bookings';
-  private vendorUrl = 'http://localhost:3000/api/vendor';
 
   constructor(private http: HttpClient) {}
 
-  // CUSTOMER: create booking
+  private authHeaders() {
+    const token = localStorage.getItem('token');
+    return {
+      headers: new HttpHeaders({
+        Authorization: `Bearer ${token}`
+      })
+    };
+  }
+
+  // CUSTOMER → CREATE BOOKING
   createBooking(data: any): Observable<any> {
-    return this.http.post(this.baseUrl, data);
+    return this.http.post(this.baseUrl, data, this.authHeaders());
   }
 
-  // VENDOR: get bookings
+  // VENDOR → GET OWN BOOKINGS
   getVendorBookings(vendorId: string): Observable<Booking[]> {
-    return this.http.get<Booking[]>(`${this.baseUrl}/vendor/${vendorId}`);
+    return this.http.get<Booking[]>(
+      `${this.baseUrl}/vendor/${vendorId}`,
+      this.authHeaders()
+    );
   }
 
-  // VENDOR: confirm booking
+  // VENDOR → CONFIRM BOOKING
   confirmBooking(bookingId: string): Observable<any> {
-    return this.http.put(`${this.baseUrl}/${bookingId}/confirm`, {});
-  }
-
-  // Check vendor status
-  checkVendorStatus(vendorId: string): Observable<any> {
-    return this.http.get<any>(`${this.vendorUrl}/status/${vendorId}`);
-  }
-
-  // Set vendor status
-  setVendorStatus(vendorId: string, status: string): Observable<any> {
-    return this.http.post<any>(`${this.vendorUrl}/status`, { vendorId, status });
+    return this.http.put(
+      `${this.baseUrl}/${bookingId}/confirm`,
+      {},
+      this.authHeaders()
+    );
   }
 }

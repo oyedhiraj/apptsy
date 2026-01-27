@@ -45,48 +45,25 @@ export class ServiceBookingComponent {
   }
 
   async bookSlot() {
-    if (!this.selectedDateTime) {
-      this.showToast('Please select date and time', 'warning');
-      return;
-    }
-
-    const bookingDate = new Date(this.selectedDateTime);
-
-    const loading = await this.loadingCtrl.create({
-      message: 'Confirming your booking...'
-    });
-    await loading.present();
-
-    try {
-      const res: any = await lastValueFrom(this.bookingService.checkVendorStatus(this.member.vendorId));
-
-      if (res.status === 'busy') {
-        await loading.dismiss();
-        this.showToast('Vendor is busy right now. Try later.', 'danger');
-        return;
-      }
-
-      const bookingData = {
-        customerName: this.member.name,
-        customerPhone: this.member.phone || '9876543210',
+  try {
+    await lastValueFrom(
+      this.bookingService.createBooking({
+        vendorId: this.member._id,
+        customerPhone: this.member.phone,
         serviceType: this.member.serviceType,
-        slotTime: bookingDate,
-        vendorId: this.member.vendorId,
+        slotTime: this.selectedDateTime,
         location: this.member.location
-      };
+      })
+    );
 
-      await lastValueFrom(this.bookingService.createBooking(bookingData));
-      await lastValueFrom(this.bookingService.setVendorStatus(this.member.vendorId, 'busy'));
+    this.bookingConfirmed = true;
+    this.showToast('Booking Confirmed', 'success');
 
-      await loading.dismiss();
-      this.bookingConfirmed = true;
-      this.showToast('Booking Confirmed!', 'success');
-
-    } catch (error) {
-      await loading.dismiss();
-      this.showToast('Booking failed', 'danger');
-    }
+  } catch (err: any) {
+    this.showToast(err.error.message || 'Vendor is busy', 'danger');
   }
+}
+
 
   goToHistory() {
     this.router.navigate(['/booking-history']);

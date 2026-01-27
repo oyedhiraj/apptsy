@@ -6,10 +6,21 @@
   <!-- STATUS FILTER -->
   <ion-toolbar>
     <ion-segment [(ngModel)]="selectedStatus">
-      <ion-segment-button value="all">All</ion-segment-button>
-      <ion-segment-button value="pending">Pending</ion-segment-button>
-      <ion-segment-button value="confirmed">Confirmed</ion-segment-button>
-      <ion-segment-button value="cancelled">Cancelled</ion-segment-button>
+      <ion-segment-button value="all">
+        All
+      </ion-segment-button>
+
+      <ion-segment-button value="pending">
+        Pending
+      </ion-segment-button>
+
+      <ion-segment-button value="confirmed">
+        Confirmed
+      </ion-segment-button>
+
+      <ion-segment-button value="cancelled">
+        Cancelled
+      </ion-segment-button>
     </ion-segment>
   </ion-toolbar>
 </ion-header>
@@ -18,18 +29,22 @@
 
   <!-- PULL TO REFRESH -->
   <ion-refresher slot="fixed" (ionRefresh)="refreshBookings($event)">
-    <ion-refresher-content></ion-refresher-content>
+    <ion-refresher-content pullingText="Pull to refresh"></ion-refresher-content>
   </ion-refresher>
 
-  <!-- BOOKINGS -->
+  <!-- BOOKINGS LIST -->
   <ion-card *ngFor="let b of filteredBookings; let i = index"
             class="booking-card"
             [ngClass]="b.status"
-            [style.animation-delay]="(i*0.08)+'s'">
+            [style.animation-delay]="(i * 0.08) + 's'">
 
     <!-- CARD HEADER -->
     <div class="card-header">
-      <div class="customer-name">{{ b.customerName }}</div>
+      <!-- ✅ CUSTOMER NAME -->
+      <div class="customer-name">
+        {{ b.customerName }}
+      </div>
+
       <div class="badge-wrapper">
         <ion-badge [color]="getStatusColor(b.status)">
           {{ b.status | titlecase }}
@@ -39,51 +54,73 @@
 
     <!-- CARD BODY -->
     <div class="card-body">
+
       <div class="row">
         <ion-icon name="briefcase-outline"></ion-icon>
-        <span><strong>Service:</strong> {{ b.serviceType }}</span>
+        <span>
+          <strong>Service:</strong> {{ b.serviceType }}
+        </span>
       </div>
+
       <div class="row">
         <ion-icon name="call-outline"></ion-icon>
-        <span><strong>Phone:</strong> {{ b.customerPhone }}</span>
+        <span>
+          <strong>Phone:</strong> {{ b.customerPhone || 'N/A' }}
+        </span>
       </div>
+
       <div class="row">
         <ion-icon name="location-outline"></ion-icon>
-        <span><strong>Location:</strong> {{ b.customerLocation || 'N/A' }}</span>
+        <span>
+          <strong>Location:</strong> {{ b.location || 'N/A' }}
+        </span>
       </div>
+
       <div class="row">
         <ion-icon name="calendar-outline"></ion-icon>
-        <span><strong>Booking Date:</strong> {{ b.bookingDate | date:'short' }}</span>
+        <span>
+          <strong>Date:</strong> {{ b.slotTime | date:'short' }}
+        </span>
       </div>
+
     </div>
 
     <!-- CARD ACTIONS -->
     <div class="card-actions">
+
+      <!-- PENDING -->
       <ion-button expand="block"
                   *ngIf="b.status === 'pending'"
-                  (click)="confirmBooking(b._id)">
+                  (click)="confirmBooking(b._id!)">
         Confirm Booking
       </ion-button>
 
+      <!-- CONFIRMED -->
       <ion-button expand="block"
+                  color="success"
                   *ngIf="b.status === 'confirmed'"
                   (click)="callCustomer(b.customerPhone)">
         Call Customer
       </ion-button>
 
+      <!-- CANCELLED -->
       <ion-button expand="block"
-                  *ngIf="b.status === 'cancelled'"
-                  color="medium" disabled>
+                  color="medium"
+                  disabled
+                  *ngIf="b.status === 'cancelled'">
         Cancelled
       </ion-button>
+
     </div>
+
   </ion-card>
 
   <!-- EMPTY STATE -->
-  <div class="empty-state" *ngIf="!isLoading && filteredBookings.length === 0">
+  <div class="empty-state"
+       *ngIf="!isLoading && filteredBookings.length === 0">
     <ion-icon name="clipboard-outline"></ion-icon>
     <h3>No bookings found</h3>
-    <p>Bookings will appear here when available</p>
+    <p>Your bookings will appear here</p>
   </div>
 
 </ion-content>
