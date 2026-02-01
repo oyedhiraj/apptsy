@@ -1,13 +1,21 @@
 <ion-header>
   <ion-toolbar color="primary">
     <ion-buttons slot="start">
-      <ion-menu-button autoHide="false"></ion-menu-button>
+      <!-- <ion-menu-button></ion-menu-button> -->
     </ion-buttons>
     <ion-title>Home Services</ion-title>
+    <ion-buttons slot="end">
+      <img #headerLogo id="headerLogo" src="assets/icon/splash-screen.png" alt="Logo" class="header-logo">
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-content fullscreen>
+<!-- Splash Screen with Logo -->
+<div id="splashScreen" class="splash-screen">
+  <img src="assets/icon/logo.png" alt="Logo" class="splash-logo">
+</div>
+
+<ion-content id="mainContent" fullscreen class="content-hidden">
   <!-- Banner -->
   <div class="banner">
     <h2>Welcome to Smart Services</h2>
