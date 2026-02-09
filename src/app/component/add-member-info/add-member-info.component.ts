@@ -25,7 +25,7 @@ export class AddMemberInfoComponent {
   services = ['Plumbing', 'Electrician', 'Cleaning', 'Painting'];
 
   // API URL
-  apiUrl = 'http://localhost:3000/api/member/add';
+  apiUrl = 'http://192.168.0.114:3000/api/member/add';
 
   constructor(
     private fb: FormBuilder,

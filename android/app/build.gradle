@@ -2,9 +2,9 @@ apply plugin: 'com.android.application'
 
 android {
     namespace "com.dheeraj.AppTsy"
-    compileSdk rootProject.ext.compileSdkVersion
+    compileSdkVersion rootProject.ext.compileSdkVersion
     defaultConfig {
-        applicationId "com.dheeraj.AppTsy"
+        applicationId "com.dheeraj.apptsy"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1

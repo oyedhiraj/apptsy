@@ -48,7 +48,7 @@ export class MemberInfoPage implements OnInit {
 
   async getMembersFromAPI() {
     try {
-      const res = await fetch('http://localhost:3000/api/vendors'); // your API
+      const res = await fetch('http://192.168.0.114:3000/api/vendors'); // your API
       const data = await res.json();
 
       const vendors = data.filter((user: any) => user.role === 'vendor');
@@ -77,7 +77,7 @@ export class MemberInfoPage implements OnInit {
     if (!path) {
       return 'assets/default-avatar.png'; // fallback image
     }
-    return `http://localhost:3000/${path}`;
+    return `http://192.168.0.114:3000/${path}`;
   }
 
   provideService(member: any) {
