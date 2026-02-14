@@ -21,7 +21,13 @@
           <ion-label position="floating">Password</ion-label>
           <ion-input [(ngModel)]="password" type="password"></ion-input>
         </ion-item>
-      </ion-list>
+        </ion-list>
+        
+        <div class="forgot-password">
+          <ion-text (click)="goToForgetPassword()" class="forgot-link">
+            Forgot Password?
+          </ion-text>
+        </div>
 
       <ion-button expand="block" class="login-btn" (click)="login()">
         Login

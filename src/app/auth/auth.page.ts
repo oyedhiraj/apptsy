@@ -64,6 +64,10 @@ export class AuthPage {
     this.router.navigate(['/home']);
   }
 
+  goToForgetPassword(){
+    this.router.navigate(['/forget-password']);
+  }
+
   get roleClass() {
     return this.role; // for animation / styling
   }
