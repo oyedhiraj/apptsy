@@ -56,7 +56,7 @@ export class ForgetPasswordComponent {
 
     try {
       const response = await fetch(
-        'http://192.168.0.114:3000/api/reset-password',
+        'https://apptsybackend1.onrender.com/api/reset-password',
         {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },

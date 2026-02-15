@@ -25,7 +25,7 @@ export class AddMemberInfoComponent {
   services = ['Plumbing', 'Electrician', 'Cleaning', 'Painting'];
 
   // API URL
-  apiUrl = 'http://192.168.0.114:3000/api/member/add';
+  apiUrl = 'https://apptsybackend1.onrender.com/api/member/add';
 
   constructor(
     private fb: FormBuilder,

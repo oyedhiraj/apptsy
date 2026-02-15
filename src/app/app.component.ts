@@ -32,7 +32,7 @@ export class AppComponent implements OnInit {
 
 
   // loadUser() {
-  //   this.http.get<any>('http://192.168.0.114:3000/api/user')
+  //   this.http.get<any>('https://apptsybackend1.onrender.com/api/user')
   //     .subscribe({
   //       next: (res) => {
   //         this.userData = res;

@@ -90,7 +90,7 @@ export class RegisterComponent {
     }
 
     try {
-      const response = await fetch('http://192.168.0.114:3000/api/register', {
+      const response = await fetch('https://apptsybackend1.onrender.com/api/register', {
         method: 'POST',
         body: formData
       });

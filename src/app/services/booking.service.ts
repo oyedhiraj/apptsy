@@ -18,7 +18,7 @@ export interface Booking {
 })
 export class BookingService {
 
-  private baseUrl = 'http://192.168.0.114:3000/api/bookings';
+  private baseUrl = 'https://apptsybackend1.onrender.com/api/bookings';
 
   constructor(private http: HttpClient) {}
 
