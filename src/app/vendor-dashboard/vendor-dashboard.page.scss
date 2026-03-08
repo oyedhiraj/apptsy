@@ -1,85 +1,234 @@
-.vendor-dashboard {
-  background: #f5f6fa;
-  padding: 12px;
-}
-
-/* BOOKING CARDS */
 .booking-card {
-  border-radius: 16px;
-  margin-bottom: 16px;
-  color: #fff;
-  box-shadow: 0 6px 18px rgba(0,0,0,0.15);
-  padding: 16px;
-  opacity: 0;
-  transform: translateY(20px);
-  animation: fadeSlideUp 0.5s forwards;
+
+  margin: 14px;
+
+  border-radius: 18px;
+
+  background: linear-gradient(135deg,#ffffff,#f3f9ff);
+
+  box-shadow: 0 10px 24px rgba(0,0,0,0.08);
+
+  transition: all 0.25s ease;
+
 }
 
 .booking-card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 22px rgba(0,0,0,0.22);
+
+  transform: translateY(-4px);
+
+  box-shadow: 0 14px 30px rgba(0,0,0,0.12);
+
 }
 
-/* STATUS COLORS */
-.booking-card.pending { background: linear-gradient(135deg, #ff9a76, #ff6a3d); }
-.booking-card.confirmed { background: linear-gradient(135deg, #6bd7b9, #00c4a7); }
-.booking-card.cancelled { background: linear-gradient(135deg, #f06666, #d93025); }
 
-/* CARD HEADER */
-.card-header {
+.top-section {
+
   display: flex;
-  justify-content: space-between;
+
   align-items: center;
-  flex-wrap: wrap;
-  padding-bottom: 12px;
+
+  margin-bottom: 12px;
+
 }
 
-.customer-name {
+
+.avatar {
+
+  width: 45px;
+
+  height: 45px;
+
+  border-radius: 50%;
+
+  background: linear-gradient(45deg,#667eea,#764ba2);
+
+  color: white;
+
+  font-weight: bold;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
   font-size: 18px;
-  font-weight: 700;
-  flex: 1 1 auto;
-  min-width: 0;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+
+  margin-right: 12px;
+
 }
 
-.badge-wrapper {
-  flex: 0 0 auto;
-}
 
-/* CARD BODY */
-.card-body { padding: 12px 0; }
-.row {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  margin-bottom: 6px;
-  font-size: 15px;
-}
+.customer-info h2 {
 
-/* CARD ACTIONS */
-.card-actions { margin-top: 12px; }
-.card-actions ion-button {
-  border-radius: 12px;
+  margin: 0;
+
+  font-size: 16px;
+
   font-weight: 600;
-  color: #fff;
+
 }
 
-/* ANIMATION */
-@keyframes fadeSlideUp {
-  0% { opacity: 0; transform: translateY(20px); }
-  100% { opacity: 1; transform: translateY(0); }
+.customer-info p {
+
+  margin: 0;
+
+  font-size: 13px;
+
+  color: #666;
+
 }
 
-/* EMPTY STATE */
-.empty-state {
+
+.status {
+
+  margin-left: auto;
+
+  font-size: 12px;
+
+  text-transform: capitalize;
+
+}
+
+
+.details {
+
+  margin-top: 8px;
+
+  margin-bottom: 12px;
+
+}
+
+
+.row {
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 8px;
+
+  margin: 6px 0;
+
+  font-size: 14px;
+
+  color: #444;
+
+}
+
+
+.actions {
+  display: flex;
+  margin-top: 12px;
+  gap: 0;
+}
+
+/* Confirm button */
+
+.confirm-btn {
+  flex: 1;
+  margin: 0;
+  --background: #2ecc71;
+  --border-radius: 14px 14px 14px 14px;
+}
+
+/* Cancel button */
+
+.cancel-btn {
+  flex: 1;
+  margin: 0;
+  --background: #e74c3c;
+  --border-radius: 14px 14px 14px 14px;
+}
+
+.booking-card {
+  position: relative;
+  margin: 14px;
+  border-radius: 18px;
+  overflow: hidden;
+  transition: 0.25s;
+}
+
+/* Card colors */
+
+.pending {
+  background: linear-gradient(135deg,#fff6d1,#ffe58a);
+}
+
+.confirmed {
+  background: linear-gradient(135deg,#d4ffd9,#8cff9a);
+}
+
+.cancelled {
+  background: linear-gradient(135deg,#ffd6d6,#ff9a9a);
+}
+
+/* Ribbon */
+
+.status-ribbon {
+  position: absolute;
+  top: 12px;
+  right: -35px;
+  transform: rotate(45deg);
+  width: 140px;
   text-align: center;
-  margin-top: 80px;
-  color: #777;
+  font-size: 12px;
+  font-weight: bold;
+  color: white;
+  padding: 4px 0;
 }
 
-.empty-state ion-icon {
-  font-size: 64px;
-  margin-bottom: 10px;
+/* Ribbon colors */
+
+.status-ribbon.pending {
+  background: #ffb300;
+}
+
+.status-ribbon.confirmed {
+  background: #2ecc71;
+}
+
+.status-ribbon.cancelled {
+  background: #e74c3c;
+}
+
+/* Avatar */
+
+.avatar {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  background: linear-gradient(45deg,#667eea,#764ba2);
+  color: white;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-weight:bold;
+}
+
+/* Layout */
+
+.top-section {
+  display:flex;
+  align-items:center;
+  gap:10px;
+  margin-bottom:10px;
+}
+
+.customer-info h2 {
+  margin:0;
+  font-size:16px;
+}
+
+.customer-info p {
+  margin:0;
+  font-size:13px;
+  color:#555;
+}
+
+.row {
+  display:flex;
+  align-items:center;
+  gap:8px;
+  margin:6px 0;
 }

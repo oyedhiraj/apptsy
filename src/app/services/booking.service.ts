@@ -33,16 +33,20 @@ export class BookingService {
 
   // CUSTOMER → CREATE BOOKING
   createBooking(data: any): Observable<any> {
-    return this.http.post(this.baseUrl, data, this.authHeaders());
+    return this.http.post(
+      this.baseUrl,
+      data,
+      this.authHeaders()
+    );
   }
 
   // VENDOR → GET OWN BOOKINGS
   getVendorBookings(vendorId: string): Observable<Booking[]> {
     return this.http.get<Booking[]>(
-      `${this.baseUrl}/vendor/${vendorId}`,
-      this.authHeaders()
-    );
-  }
+    `${this.baseUrl}/vendor/${vendorId}`,
+    this.authHeaders()
+  );
+}
 
   // VENDOR → CONFIRM BOOKING
   confirmBooking(bookingId: string): Observable<any> {
@@ -52,4 +56,14 @@ export class BookingService {
       this.authHeaders()
     );
   }
+
+  // VENDOR → CANCEL BOOKING
+  cancelBooking(bookingId: string): Observable<any> {
+    return this.http.put(
+      `${this.baseUrl}/${bookingId}/cancel`,
+      {},
+      this.authHeaders()
+    );
+  }
+
 }

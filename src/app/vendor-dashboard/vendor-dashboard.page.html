@@ -6,121 +6,120 @@
   <!-- STATUS FILTER -->
   <ion-toolbar>
     <ion-segment [(ngModel)]="selectedStatus">
+
       <ion-segment-button value="all">
-        All
+        <ion-label>All</ion-label>
       </ion-segment-button>
 
       <ion-segment-button value="pending">
-        Pending
+        <ion-label>Pending</ion-label>
       </ion-segment-button>
 
       <ion-segment-button value="confirmed">
-        Confirmed
+        <ion-label>Confirmed</ion-label>
       </ion-segment-button>
 
       <ion-segment-button value="cancelled">
-        Cancelled
+        <ion-label>Cancelled</ion-label>
       </ion-segment-button>
+
     </ion-segment>
   </ion-toolbar>
 </ion-header>
 
-<ion-content fullscreen class="vendor-dashboard">
 
-  <!-- PULL TO REFRESH -->
+<ion-content>
+
+  <!-- Pull to refresh -->
+
   <ion-refresher slot="fixed" (ionRefresh)="refreshBookings($event)">
-    <ion-refresher-content pullingText="Pull to refresh"></ion-refresher-content>
+    <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
 
-  <!-- BOOKINGS LIST -->
-  <ion-card *ngFor="let b of filteredBookings; let i = index"
-            class="booking-card"
-            [ngClass]="b.status"
-            [style.animation-delay]="(i * 0.08) + 's'">
 
-    <!-- CARD HEADER -->
-    <div class="card-header">
-      <!-- ✅ CUSTOMER NAME -->
-      <div class="customer-name">
-        {{ b.customerName }}
+  <!-- Loading Skeleton -->
+
+  <div *ngIf="isLoading">
+
+    <ion-card *ngFor="let i of [1,2,3]" class="booking-card">
+      <ion-card-content>
+        <ion-skeleton-text animated style="width:70%"></ion-skeleton-text>
+        <ion-skeleton-text animated style="width:40%"></ion-skeleton-text>
+      </ion-card-content>
+    </ion-card>
+
+  </div>
+
+
+  <!-- Booking Cards -->
+
+  <div *ngIf="!isLoading">
+
+    <ion-card *ngFor="let booking of filteredBookings" class="booking-card" [ngClass]="booking.status">
+
+      <!-- STATUS RIBBON -->
+      <div class="status-ribbon" [ngClass]="booking.status">
+        {{ booking.status }}
       </div>
 
-      <div class="badge-wrapper">
-        <ion-badge [color]="getStatusColor(b.status)">
-          {{ b.status | titlecase }}
-        </ion-badge>
-      </div>
-    </div>
+      <ion-card-content>
 
-    <!-- CARD BODY -->
-    <div class="card-body">
+        <div class="top-section">
 
-      <div class="row">
-        <ion-icon name="briefcase-outline"></ion-icon>
-        <span>
-          <strong>Service:</strong> {{ b.serviceType }}
-        </span>
-      </div>
+          <div class="avatar">
+            {{ booking.customerName.charAt(0) }}
+          </div>
 
-      <div class="row">
-        <ion-icon name="call-outline"></ion-icon>
-        <span>
-          <strong>Phone:</strong> {{ b.customerPhone || 'N/A' }}
-        </span>
-      </div>
+          <div class="customer-info">
+            <h2>{{ booking.customerName }}</h2>
+            <p>{{ booking.customerPhone }}</p>
+          </div>
 
-      <div class="row">
-        <ion-icon name="location-outline"></ion-icon>
-        <span>
-          <strong>Location:</strong> {{ b.location || 'N/A' }}
-        </span>
-      </div>
+        </div>
 
-      <div class="row">
-        <ion-icon name="calendar-outline"></ion-icon>
-        <span>
-          <strong>Date:</strong> {{ b.slotTime | date:'short' }}
-        </span>
-      </div>
+        <div class="details">
 
-    </div>
+          <div class="row">
+            <ion-icon name="construct-outline"></ion-icon>
+            {{ booking.serviceType }}
+          </div>
 
-    <!-- CARD ACTIONS -->
-    <div class="card-actions">
+          <div class="row">
+            <ion-icon name="time-outline"></ion-icon>
+            {{ booking.slotTime | date:'medium' }}
+          </div>
 
-      <!-- PENDING -->
-      <ion-button expand="block"
-                  *ngIf="b.status === 'pending'"
-                  (click)="confirmBooking(b._id!)">
-        Confirm Booking
-      </ion-button>
+          <div class="row">
+            <ion-icon name="location-outline"></ion-icon>
+            {{ booking.location }}
+          </div>
 
-      <!-- CONFIRMED -->
-      <ion-button expand="block"
-                  color="success"
-                  *ngIf="b.status === 'confirmed'"
-                  (click)="callCustomer(b.customerPhone)">
-        Call Customer
-      </ion-button>
+        </div>
 
-      <!-- CANCELLED -->
-      <ion-button expand="block"
-                  color="medium"
-                  disabled
-                  *ngIf="b.status === 'cancelled'">
-        Cancelled
-      </ion-button>
+        <div class="actions" *ngIf="booking.status === 'pending'">
 
-    </div>
+          <ion-button expand="block" class="confirm-btn" (click)="confirmBooking(booking._id!)">
 
-  </ion-card>
+            ✔ Confirm
 
-  <!-- EMPTY STATE -->
-  <div class="empty-state"
-       *ngIf="!isLoading && filteredBookings.length === 0">
-    <ion-icon name="clipboard-outline"></ion-icon>
-    <h3>No bookings found</h3>
-    <p>Your bookings will appear here</p>
+          </ion-button>
+
+          <ion-button expand="block" class="cancel-btn" (click)="cancelBooking(booking._id!)">
+
+            ❌ Cancel
+
+          </ion-button>
+
+        </div>
+
+        <ion-button expand="block" fill="outline" color="primary" (click)="callCustomer(booking.customerPhone)">
+          📞 Call Customer
+        </ion-button>
+
+      </ion-card-content>
+
+    </ion-card>
+
   </div>
 
 </ion-content>

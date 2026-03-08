@@ -4,7 +4,7 @@ android {
     namespace "com.dheeraj.AppTsy"
     compileSdkVersion rootProject.ext.compileSdkVersion
     defaultConfig {
-        applicationId "com.dheeraj.apptsy"
+        applicationId "com.dheeraj.AppTsy"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
