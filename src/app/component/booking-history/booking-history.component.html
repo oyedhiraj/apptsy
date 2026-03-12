@@ -1,59 +1,62 @@
 <ion-header>
-  <ion-toolbar class="lux-header">
+  <ion-toolbar color="primary">
     <ion-title>My Bookings</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content class="lux-bg">
+<ion-content class="history-bg ion-padding">
 
-  <!-- Empty state -->
+  <!-- Empty State -->
   <div *ngIf="bookings.length === 0" class="empty-state">
     <ion-icon name="calendar-outline"></ion-icon>
-    <p>No bookings yet!</p>
-    <p>Book a service and it will appear here.</p>
+    <p>No bookings yet</p>
   </div>
 
-  <!-- Booking List -->
-  <div *ngFor="let booking of bookings" class="lux-card booking-card fade-up">
+  <!-- Booking Card -->
+  <div
+    *ngFor="let booking of bookings"
+    class="booking-card"
+    [ngClass]="booking.status"
+  >
 
-    <!-- Header row: Service + Status -->
-    <div class="booking-header">
-      <h3>{{ booking.serviceType }}</h3>
+    <!-- Top Section -->
+    <div class="top">
 
-      <!-- Status badge -->
-      <span
-        [ngClass]="{
-          'pending': booking.status === 'pending',
-          'confirmed': booking.status === 'confirmed',
-          'cancelled': booking.status === 'cancelled'
-        }"
-        class="status-badge"
-      >
-        {{ booking.status | titlecase }}
+      <div class="avatar">
+        {{ booking.vendorId?.name?.charAt(0) || 'V' }}
+      </div>
+
+      <div class="info">
+        <h3>{{ booking.vendorId?.name }}</h3>
+        <p>{{ booking.serviceType | titlecase }}</p>
+      </div>
+
+      <span class="status">
+        {{ booking.status }}
       </span>
+
     </div>
 
-    <!-- Details rows -->
-    <div class="booking-details">
-      <div class="info-row">
-        <ion-icon name="person-outline"></ion-icon>
-        <span>{{ booking.customerName }}</span>
+    <div class="divider"></div>
+
+    <!-- Booking Details -->
+    <div class="details">
+
+      <div class="row">
+        <ion-icon name="call-outline"></ion-icon>
+        <span>{{ booking.vendorId?.number }}</span>
       </div>
 
-      <div class="info-row">
-        <ion-icon name="time-outline"></ion-icon>
-        <span>{{ booking.slotTime }}</span>
-      </div>
-
-      <div class="info-row">
+      <div class="row">
         <ion-icon name="location-outline"></ion-icon>
         <span>{{ booking.location }}</span>
       </div>
 
-      <div class="info-row">
-        <ion-icon name="call-outline"></ion-icon>
-        <span>{{ booking.customerPhone }}</span>
+      <div class="row">
+        <ion-icon name="time-outline"></ion-icon>
+        <span>{{ booking.createdAt | date:'medium' }}</span>
       </div>
+
     </div>
 
   </div>

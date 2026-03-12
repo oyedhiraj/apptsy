@@ -1,85 +1,107 @@
-.lux-bg {
-  --background: radial-gradient(circle at top, #eef2ff, #dbeafe);
-  padding: 16px;
+.history-bg{
+  background:#f6f7fb;
 }
 
-.lux-header {
-  --background: linear-gradient(135deg, #6366f1, #8b5cf6);
-  color: white;
+/* Card */
+.booking-card{
+  border-radius:16px;
+  padding:16px;
+  margin-bottom:16px;
+  color:white;
+  text-transform:uppercase;
+  letter-spacing:0.5px;
+  box-shadow:0 6px 14px rgba(0,0,0,0.15);
 }
 
-.booking-card {
-  background: rgba(255,255,255,0.85);
-  border-radius: 18px;
-  padding: 18px;
-  margin-bottom: 16px;
-  box-shadow: 0 12px 28px rgba(0,0,0,0.08);
+/* Confirmed */
+.booking-card.confirmed{
+  background: linear-gradient(135deg,#28c76f,#81fbb8);
 }
 
-.booking-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 12px;
+/* Pending */
+.booking-card.pending{
+  background: linear-gradient(135deg,#ff9f43,#ffd56f);
 }
 
-.booking-header h3 {
-  margin: 0;
-  font-size: 1.2rem;
+/* Cancelled */
+.booking-card.cancelled{
+  background: linear-gradient(135deg,#ea5455,#ff9a9e);
 }
 
-.booking-header span {
-  padding: 4px 10px;
-  border-radius: 12px;
-  font-size: 0.9rem;
-  font-weight: 500;
-  color: white;
+/* Top Section */
+.top{
+  display:flex;
+  align-items:center;
+  gap:12px;
 }
 
-.booking-header .confirmed {
-  background: #22c55e;
+/* Avatar */
+.avatar{
+  width:45px;
+  height:45px;
+  border-radius:50%;
+  background:rgba(255,255,255,0.25);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-weight:bold;
+  font-size:20px;
 }
 
-.booking-header .cancelled {
-  background: #ef4444;
+/* Vendor Info */
+.info h3{
+  margin:0;
+  font-size:16px;
 }
 
-.booking-details .info-row {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-bottom: 6px;
-  color: #374151;
+.info p{
+  margin:0;
+  font-size:13px;
+  opacity:0.9;
 }
 
-.booking-details .info-row ion-icon {
-  color: #6366f1;
-  font-size: 18px;
+/* Status pill */
+.status{
+  margin-left:auto;
+  background:rgba(255,255,255,0.25);
+  padding:4px 12px;
+  border-radius:20px;
+  font-size:12px;
 }
 
-.fade-up {
-  animation: fadeUp 0.5s ease;
+/* Divider */
+.divider{
+  height:1px;
+  background:rgba(255,255,255,0.3);
+  margin:12px 0;
 }
 
-@keyframes fadeUp {
-  from {
-    opacity: 0;
-    transform: translateY(12px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+/* Details */
+.details{
+  display:flex;
+  flex-direction:column;
+  gap:8px;
 }
 
-.empty-state {
-  text-align: center;
-  margin-top: 50px;
-  color: #6b7280;
+.row{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  font-size:14px;
 }
 
-.empty-state ion-icon {
-  font-size: 50px;
-  color: #6366f1;
-  margin-bottom: 16px;
+.row ion-icon{
+  color:white;
+}
+
+/* Empty State */
+.empty-state{
+  text-align:center;
+  margin-top:120px;
+  color:#666;
+  text-transform:uppercase;
+}
+
+.empty-state ion-icon{
+  font-size:48px;
 }

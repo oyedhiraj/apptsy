@@ -27,34 +27,47 @@ export class AuthPage {
   }
 
   async login() {
-    if (!this.email || !this.password) {
-      alert('Email and password are required');
+  if (!this.email || !this.password) {
+    alert('Email and password are required');
+    return;
+  }
+
+  try {
+    const response = await fetch('https://apptsybackend1.onrender.com/api/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email: this.email, password: this.password })
+    });
+
+    const data = await response.json();
+
+    if (!response.ok || data.user.role != this.role) {
+      alert(data.message || 'Invalid credentials');
       return;
     }
 
-    try {
-      const response = await fetch('https://apptsybackend1.onrender.com/api/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email: this.email, password: this.password })
-      });
-      const data = await response.json();
-      if (!response.ok || data.user.role != this.role) {
-        alert(data.message || 'Invalid credentials');
-        return;
-      }
-      localStorage.setItem('token', data.token);
+    localStorage.setItem('token', data.token);
+
+    // ✅ Save correct ID based on role
+    if (data.user.role === 'vendor') {
       localStorage.setItem('vendorId', data.user.id);
-      alert('Login successful');
-
-      if (this.role === 'vendor') this.router.navigate(['/vendor-dashboard']);
-      else this.router.navigate(['/member-info']);
-
-    } catch (error) {
-      console.error(error);
-      alert('Server not responding. Try again later.');
+    } else {
+      localStorage.setItem('userId', data.user.id);
     }
+
+    alert('Login successful');
+
+    if (this.role === 'vendor') {
+      this.router.navigate(['/vendor-dashboard']);
+    } else {
+      this.router.navigate(['/member-info']);
+    }
+
+  } catch (error) {
+    console.error(error);
+    alert('Server not responding. Try again later.');
   }
+}
 
   goToRegister() {
     this.router.navigate(['/register']);

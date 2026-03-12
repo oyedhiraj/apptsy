@@ -13,7 +13,7 @@ import { BookingService } from '../../services/booking.service';
 export class BookingHistoryComponent implements OnInit {
 
   bookings: any[] = [];
-  vendorId = '';  // will set dynamically
+  userId = '';  // will set dynamically
 
   constructor(
     private bookingService: BookingService,
@@ -22,11 +22,11 @@ export class BookingHistoryComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    // get vendorId from localStorage or login session
-    this.vendorId = localStorage.getItem('vendorId') || '';
+    // get userId from localStorage or login session
+    this.userId = localStorage.getItem('userId') || '';
 
-    if (!this.vendorId) {
-      this.showToast('Vendor ID not found', 'danger');
+    if (!this.userId) {
+      this.showToast('User ID not found', 'danger');
       return;
     }
 
@@ -39,7 +39,7 @@ export class BookingHistoryComponent implements OnInit {
     });
     await loading.present();
 
-    this.bookingService.getVendorBookings(this.vendorId).subscribe({
+    this.bookingService.getUserBookings(this.userId).subscribe({
       next: (res: any) => {
         this.bookings = res.map((b: any) => ({
           ...b,

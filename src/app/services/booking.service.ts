@@ -20,7 +20,7 @@ export class BookingService {
 
   private baseUrl = 'https://apptsybackend1.onrender.com/api/bookings';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   private authHeaders() {
     const token = localStorage.getItem('token');
@@ -43,10 +43,17 @@ export class BookingService {
   // VENDOR → GET OWN BOOKINGS
   getVendorBookings(vendorId: string): Observable<Booking[]> {
     return this.http.get<Booking[]>(
-    `${this.baseUrl}/vendor/${vendorId}`,
-    this.authHeaders()
-  );
-}
+      `${this.baseUrl}/vendor/${vendorId}`,
+      this.authHeaders()
+    );
+  }
+
+  getUserBookings(userId: string): Observable<Booking[]> {
+    return this.http.get<Booking[]>(
+      `${this.baseUrl}/user/${userId}`,
+      this.authHeaders()
+    );
+  }
 
   // VENDOR → CONFIRM BOOKING
   confirmBooking(bookingId: string): Observable<any> {
