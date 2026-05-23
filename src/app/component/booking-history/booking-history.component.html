@@ -1,60 +1,274 @@
 <ion-header>
   <ion-toolbar color="primary">
-    <ion-title>My Bookings</ion-title>
+
+    <ion-title>
+      My Bookings
+    </ion-title>
+
   </ion-toolbar>
 </ion-header>
 
-<ion-content class="history-bg ion-padding">
+<ion-content
+  class="history-bg ion-padding"
+  [scrollY]="selectedBooking ? false : true"
+>
 
-  <!-- Empty State -->
-  <div *ngIf="bookings.length === 0" class="empty-state">
-    <ion-icon name="calendar-outline"></ion-icon>
-    <p>No bookings yet</p>
-  </div>
+  <!-- EMPTY STATE -->
 
-  <!-- Booking Card -->
   <div
-    *ngFor="let booking of bookings"
-    class="booking-card"
-    [ngClass]="booking.status"
+    *ngIf="bookings.length === 0"
+    class="empty-state"
   >
 
-    <!-- Top Section -->
-    <div class="top">
+    <ion-icon
+      name="calendar-outline"
+    ></ion-icon>
 
-      <div class="avatar">
-        {{ booking.vendorId?.name?.charAt(0) || 'V' }}
+    <p>
+      No bookings yet
+    </p>
+
+  </div>
+
+  <!-- BLUR OVERLAY -->
+
+  <div
+    class="blur-overlay"
+    *ngIf="selectedBooking"
+    (click)="selectedBooking = null"
+  ></div>
+
+  <!-- BOOKING LIST -->
+
+  <div
+    *ngFor="let booking of bookings"
+  >
+
+    <!-- BOOKING CARD -->
+
+    <div
+      class="booking-card"
+      [ngClass]="booking.status"
+      [class.blur-card]="selectedBooking"
+      (click)="toggleFeedback(booking)"
+    >
+
+      <!-- TOP -->
+
+      <div class="top">
+
+        <div class="avatar">
+
+          {{ booking.vendorId?.name?.charAt(0) || 'V' }}
+
+        </div>
+
+        <div class="info">
+
+          <h3>
+            {{ booking.vendorId?.name }}
+          </h3>
+
+          <p>
+            {{ booking.serviceType | titlecase }}
+          </p>
+
+        </div>
+
+        <span class="status">
+
+          {{ booking.status }}
+
+        </span>
+
       </div>
 
-      <div class="info">
-        <h3>{{ booking.vendorId?.name }}</h3>
-        <p>{{ booking.serviceType | titlecase }}</p>
-      </div>
+      <!-- DIVIDER -->
 
-      <span class="status">
-        {{ booking.status }}
-      </span>
+      <div class="divider"></div>
+
+      <!-- DETAILS -->
+
+      <div class="details">
+
+        <div class="row">
+
+          <ion-icon
+            name="call-outline"
+          ></ion-icon>
+
+          <span>
+            {{ booking.vendorId?.number }}
+          </span>
+
+        </div>
+
+        <div class="row">
+
+          <ion-icon
+            name="location-outline"
+          ></ion-icon>
+
+          <span>
+            {{ booking.location }}
+          </span>
+
+        </div>
+
+        <div class="row">
+
+          <ion-icon
+            name="time-outline"
+          ></ion-icon>
+
+          <span>
+            {{ booking.createdAt | date:'medium' }}
+          </span>
+
+        </div>
+
+      </div>
 
     </div>
 
-    <div class="divider"></div>
+    <!-- FEEDBACK POPUP -->
 
-    <!-- Booking Details -->
-    <div class="details">
+    <div
+      class="outside-feedback active-feedback"
+      *ngIf="selectedBooking === booking"
+    >
 
-      <div class="row">
-        <ion-icon name="call-outline"></ion-icon>
-        <span>{{ booking.vendorId?.number }}</span>
+      <!-- ALREADY SUBMITTED -->
+
+      <div
+        *ngIf="booking.feedback?.given"
+        class="submitted-feedback"
+      >
+
+        <div class="submitted-top">
+
+          <div class="submitted-rating">
+
+            <ion-icon
+              name="star"
+            ></ion-icon>
+
+            {{ booking.feedback.rating }}/5
+
+          </div>
+
+          <div class="thank-you">
+            Thank You
+          </div>
+
+        </div>
+
+        <p>
+          {{ booking.feedback.comment }}
+        </p>
+
       </div>
 
-      <div class="row">
-        <ion-icon name="location-outline"></ion-icon>
-        <span>{{ booking.location }}</span>
-      </div>
+      <!-- FEEDBACK FORM -->
 
-      <div class="row">
-        <ion-icon name="time-outline"></ion-icon>
-        <span>{{ booking.createdAt | date:'medium' }}</span>
+      <div
+        *ngIf="!booking.feedback?.given"
+        class="feedback-form-card"
+      >
+
+        <!-- CLOSE -->
+
+        <div class="close-row">
+
+          <ion-icon
+            name="close-outline"
+            (click)="selectedBooking = null"
+          ></ion-icon>
+
+        </div>
+
+        <!-- USER -->
+
+        <div class="feedback-user">
+
+          <div class="feedback-user-left">
+
+            <div class="feedback-avatar">
+
+              {{ booking.vendorId?.name?.charAt(0) || 'V' }}
+
+            </div>
+
+            <div class="feedback-user-info">
+
+              <h4>
+                {{ booking.vendorId?.name }}
+              </h4>
+
+              <span>
+                {{ booking.serviceType }}
+              </span>
+
+            </div>
+
+          </div>
+
+          <!-- <ion-icon
+            name="chatbubble-ellipses-outline"
+            class="feedback-icon"
+          ></ion-icon> -->
+
+        </div>
+
+        <!-- TITLE -->
+
+        <div class="feedback-title">
+
+          How was your experience?
+
+        </div>
+
+        <!-- STARS -->
+
+        <div class="stars">
+
+          <ion-icon
+            *ngFor="let star of [1,2,3,4,5]"
+            [name]="booking.tempRating >= star
+              ? 'star'
+              : 'star-outline'"
+            (click)="booking.tempRating = star"
+          >
+          </ion-icon>
+
+        </div>
+
+        <!-- COMMENT -->
+
+        <div class="comment-box">
+
+          <ion-textarea
+            autoGrow="true"
+            rows="4"
+            placeholder="Write your feedback..."
+            [(ngModel)]="booking.tempComment"
+          >
+          </ion-textarea>
+
+        </div>
+
+        <!-- BUTTON -->
+
+        <ion-button
+          expand="block"
+          class="submit-btn"
+          (click)="submitFeedback(booking)"
+        >
+
+          Submit Feedback
+
+        </ion-button>
+
       </div>
 
     </div>

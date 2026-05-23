@@ -73,4 +73,23 @@ export class BookingService {
     );
   }
 
+  submitFeedback(
+  bookingId: string,
+  feedback: any
+) {
+
+  const token =
+    localStorage.getItem('token');
+
+  return this.http.put(
+
+    `${this.baseUrl}/${bookingId}/feedback`,
+
+    feedback,
+
+    this.authHeaders()
+
+  );
+}
+
 }

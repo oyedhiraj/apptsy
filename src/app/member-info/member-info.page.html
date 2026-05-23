@@ -1,103 +1,264 @@
 <ion-header>
+
   <ion-toolbar color="primary">
-    <ion-title>Member Information</ion-title>
+
+    <ion-title>
+      Member Information
+    </ion-title>
+
     <ion-buttons slot="end">
+
       <ion-button (click)="isFilterOpen = true">
+
         <ion-icon name="filter-outline"></ion-icon>
+
       </ion-button>
+
     </ion-buttons>
+
   </ion-toolbar>
 
-  <ion-toolbar>
-    <ion-searchbar
-      [(ngModel)]="searchText"
-      (ionInput)="applyFilter()"
-      placeholder="Search by name or service">
-    </ion-searchbar>
+  <!-- SEARCH -->
+
+  <ion-toolbar class="search-toolbar">
+
+    <div class="search-wrapper">
+
+      <ion-icon name="search-outline" class="search-icon"></ion-icon>
+
+      <input type="text" placeholder="Search vendor or service..." [(ngModel)]="searchText" (input)="applyFilter()" />
+
+      <ion-icon *ngIf="searchText" name="close-circle" class="clear-icon"
+        (click)="searchText=''; applyFilter()"></ion-icon>
+
+    </div>
+
   </ion-toolbar>
+
 </ion-header>
 
 <ion-content [fullscreen]="true" class="member-page">
 
+  <!-- MEMBER LIST -->
+
   <div class="member-list">
+
     <ion-card *ngFor="let member of filteredMembers" class="member-card">
-  <div class="member-top">
-    <ion-avatar class="avatar">
-      <img [src]="getPhotoUrl(member.profilePhotoPath)" />
-    </ion-avatar>
 
-    <div class="member-details">
-      <h2>{{ member.name }}</h2>
-      <p>{{ member.age }} years old</p>
-      <p>
-        <ion-icon [name]="getServiceIcon(member.serviceType)"></ion-icon>
-        {{ member.serviceType }}
-      </p>
-      <p>
-        <ion-icon name="location-outline"></ion-icon>
-        {{ member.location }}
-      </p>
-    </div>
+      <!-- TOP -->
 
-    <ion-badge [color]="member.gender === 'male' ? 'primary' : 'danger'" class="gender-badge">
-      <ion-icon [name]="member.gender === 'male' ? 'man-outline' : 'woman-outline'"></ion-icon>
-    </ion-badge>
-  </div>
+      <div class="member-top">
 
-  <div class="member-actions">
-    <ion-button expand="block" color="secondary" (click)="provideService(member)">
-      <ion-icon slot="start" name="hand-right-outline"></ion-icon>
-      Provide Service
-    </ion-button>
-  </div>
-</ion-card>
+        <!-- CUSTOM DP -->
+
+        <div class="custom-avatar">
+
+          <!-- IMAGE -->
+
+          <img *ngIf="member.profilePhotoPath" [src]="getPhotoUrl(member.profilePhotoPath)"
+            (error)="member.profilePhotoPath=''" />
+
+          <!-- INITIALS -->
+
+          <div *ngIf="!member.profilePhotoPath" class="avatar-icon">
+
+            {{ getInitials(member.name) }}
+
+          </div>
+
+        </div>
+
+        <!-- DETAILS -->
+
+        <div class="member-details">
+
+          <h2>
+
+            {{ member.name }}
+
+          </h2>
+
+          <p>
+
+            <ion-icon [name]="getServiceIcon(member.serviceType)"></ion-icon>
+
+            {{ member.serviceType }}
+
+          </p>
+
+          <p>
+
+            <ion-icon name="location-outline"></ion-icon>
+
+            {{ member.location }}
+
+          </p>
+
+          <p>
+
+            <ion-icon name="calendar-outline"></ion-icon>
+
+            {{ member.age }} years old
+
+          </p>
+
+          <!-- RATING -->
+
+          <div class="rating-row">
+
+            <div class="stars">
+
+              <ion-icon *ngFor="let star of [1,2,3,4,5]" [name]="(member.averageRating || 0) >= star
+                  ? 'star'
+                  : 'star-outline'">
+              </ion-icon>
+
+            </div>
+
+            <!-- <span class="rating-text">
+
+              {{ member.averageRating || 0 }}
+
+              ({{ member.totalRatings || 0 }})
+
+            </span> -->
+
+          </div>
+
+        </div>
+
+        <!-- GENDER -->
+
+        <ion-badge [color]="member.gender === 'male'
+            ? 'primary'
+            : 'danger'" class="gender-badge">
+
+          <ion-icon [name]="member.gender === 'male'
+              ? 'man-outline'
+              : 'woman-outline'"></ion-icon>
+
+        </ion-badge>
+
+      </div>
+
+      <!-- BUTTON -->
+
+      <div class="member-actions">
+
+        <ion-button expand="block" class="service-btn" (click)="provideService(member)">
+
+          <ion-icon slot="start" name="hand-right-outline"></ion-icon>
+
+          Provide Service
+
+        </ion-button>
+
+      </div>
+
+    </ion-card>
 
   </div>
 
   <!-- FILTER SHEET -->
+
   <div class="filter-sheet" [class.open]="isFilterOpen">
+
     <ion-card>
+
       <ion-card-header>
+
         <div class="filter-header">
-          <h2>FILTER</h2>
-          <ion-button class="close-icon" fill="clear" (click)="isFilterOpen = false">
+
+          <h2>
+            FILTER
+          </h2>
+
+          <ion-button fill="clear" (click)="isFilterOpen = false">
+
             <ion-icon name="close-outline" size="large"></ion-icon>
+
           </ion-button>
+
         </div>
+
       </ion-card-header>
 
       <ion-card-content>
-        <h3>Location</h3>
+
+        <!-- LOCATION -->
+
+        <h3>
+          Location
+        </h3>
+
         <div class="chip-group">
-          <ion-chip *ngFor="let loc of locations"
-                    [color]="selectedLocations.includes(loc) ? 'primary' : 'medium'"
-                    (click)="toggleSelection('location', loc)">
+
+          <ion-chip *ngFor="let loc of locations" [color]="selectedLocations.includes(loc)
+              ? 'primary'
+              : 'medium'" (click)="toggleSelection('location', loc)">
+
             {{ loc }}
+
           </ion-chip>
+
         </div>
 
-        <h3>Service</h3>
+        <!-- SERVICE -->
+
+        <h3>
+          Service
+        </h3>
+
         <div class="chip-group">
-          <ion-chip *ngFor="let svc of services"
-                    [color]="selectedServices.includes(svc) ? 'primary' : 'medium'"
-                    (click)="toggleSelection('service', svc)">
+
+          <ion-chip *ngFor="let svc of services" [color]="selectedServices.includes(svc)
+              ? 'primary'
+              : 'medium'" (click)="toggleSelection('service', svc)">
+
             {{ svc }}
+
           </ion-chip>
+
         </div>
 
-        <h3>Gender</h3>
+        <!-- GENDER -->
+
+        <h3>
+          Gender
+        </h3>
+
         <div class="chip-group">
-          <ion-chip *ngFor="let g of genders"
-                    [color]="selectedGenders.includes(g) ? 'primary' : 'medium'"
-                    (click)="toggleSelection('gender', g)">
+
+          <ion-chip *ngFor="let g of genders" [color]="selectedGenders.includes(g)
+              ? 'primary'
+              : 'medium'" (click)="toggleSelection('gender', g)">
+
             {{ g | titlecase }}
+
           </ion-chip>
+
         </div>
 
-        <ion-button expand="block" color="primary" (click)="applyFilter()">Apply Filter</ion-button>
-        <ion-button expand="block" color="medium" fill="outline" (click)="resetFilter()">Reset Filter</ion-button>
+        <div class="filter-actions">
+
+          <ion-button class="apply-btn" expand="block" color="primary" (click)="applyFilter()">
+
+            Apply
+
+          </ion-button>
+
+          <ion-button class="reset-btn" expand="block" fill="outline" color="medium" (click)="resetFilter()">
+
+            Reset
+
+          </ion-button>
+
+        </div>
+
       </ion-card-content>
+
     </ion-card>
+
   </div>
 
 </ion-content>
