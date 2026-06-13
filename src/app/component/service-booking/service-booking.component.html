@@ -44,7 +44,7 @@
       ></ion-datetime>
     </div>
 
-    <button class="lux-btn" (click)="bookSlot()">
+    <button class="lux-btn" [disabled]="!termsAccepted" (click)="bookSlot()">
       🚀 Confirm Booking
     </button>
   </section>
@@ -70,3 +70,62 @@
   </section>
 
 </ion-content>
+
+<div class="terms-backdrop" *ngIf="!termsAccepted">
+  <div class="terms-modal">
+
+    <div class="drag-indicator"></div>
+
+    <div class="terms-header">
+      <ion-icon name="shield-checkmark"></ion-icon>
+      <h2>Terms & Conditions</h2>
+    </div>
+
+    <div class="terms-content">
+
+      <div class="term-item">
+        <ion-icon name="checkmark-circle"></ion-icon>
+        <span>Apptsy only connects customers with independent service providers.</span>
+      </div>
+
+      <div class="term-item">
+        <ion-icon name="checkmark-circle"></ion-icon>
+        <span>Service quality, pricing, and work completion are the provider's responsibility.</span>
+      </div>
+
+      <div class="term-item">
+        <ion-icon name="checkmark-circle"></ion-icon>
+        <span>Payments are handled directly between customers and providers.</span>
+      </div>
+
+      <div class="term-item">
+        <ion-icon name="checkmark-circle"></ion-icon>
+        <span>Apptsy is not liable for disputes, delays, damages, or losses.</span>
+      </div>
+
+      <div class="term-item">
+        <ion-icon name="checkmark-circle"></ion-icon>
+        <span>By continuing, you agree to Apptsy's Terms & Conditions.</span>
+      </div>
+
+    </div>
+
+    <div class="terms-actions">
+      <ion-button
+        expand="block"
+        fill="outline"
+        color="medium"
+        (click)="goBack()">
+        Decline
+      </ion-button>
+
+      <ion-button
+        expand="block"
+        color="success"
+        (click)="acceptTerms()">
+        Accept & Continue
+      </ion-button>
+    </div>
+
+  </div>
+</div>

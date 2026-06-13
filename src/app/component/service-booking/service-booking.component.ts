@@ -10,6 +10,7 @@ import { Router } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 import { BookingService } from '../../services/booking.service';
 import { lastValueFrom } from 'rxjs';
+import { AlertController } from '@ionic/angular';
 
 @Component({
   selector: 'app-service-booking',
@@ -26,12 +27,14 @@ export class ServiceBookingComponent {
 
   selectedDateTime: any;
   minDate = new Date().toISOString();
+  termsAccepted = false;
 
   constructor(
     private bookingService: BookingService,
     private toastCtrl: ToastController,
     private loadingCtrl: LoadingController,
-    private router: Router
+    private router: Router,
+    private alertCtrl: AlertController
   ) {}
 
   ngOnInit() {
@@ -44,7 +47,23 @@ export class ServiceBookingComponent {
     }
   }
 
-  async bookSlot() {
+ async bookSlot() {
+  if (!this.termsAccepted) {
+    this.showToast(
+      'Please accept Terms & Conditions first',
+      'warning'
+    );
+    return;
+  }
+
+  if (!this.selectedDateTime) {
+    this.showToast(
+      'Please select date & time',
+      'warning'
+    );
+    return;
+  }
+
   try {
     await lastValueFrom(
       this.bookingService.createBooking({
@@ -77,4 +96,19 @@ export class ServiceBookingComponent {
     });
     toast.present();
   }
+
+  acceptTerms() {
+  this.termsAccepted = true;
+}
+
+goBack() {
+  if (!this.termsAccepted) {
+    this.showToast(
+      'Please accept Terms & Conditions first',
+      'warning'
+    );
+  }
+  this.router.navigate(['/member-info']);
+}
+
 }
